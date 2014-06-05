@@ -1,0 +1,20 @@
+Error
+Index: 0, Size: 0
+java.lang.Throwable.<init>(Throwable.java:67)<br>
+java.util.ArrayList.get(ArrayList.java:343)<br>
+es.congreso.votaciones.servlet.OpenData.doPost(OpenData.java:90)<br>
+es.congreso.votaciones.servlet.OpenData.doGet(OpenData.java:70)<br>
+javax.servlet.http.HttpServlet.service(HttpServlet.java:743)<br>
+javax.servlet.http.HttpServlet.service(HttpServlet.java:856)<br>
+com.evermind.server.http.ResourceFilterChain.doFilter(ResourceFilterChain.java:64)<br>
+oracle.security.jazn.oc4j.JAZNFilter.doFilter(JAZNFilter.java:440)<br>
+com.evermind.server.http.ServletRequestDispatcher.invoke(ServletRequestDispatcher.java:644)<br>
+com.evermind.server.http.ServletRequestDispatcher.forwardInternal(ServletRequestDispatcher.java:391)<br>
+com.evermind.server.http.HttpRequestHandler.doProcessRequest(HttpRequestHandler.java:908)<br>
+com.evermind.server.http.HttpRequestHandler.processRequest(HttpRequestHandler.java:458)<br>
+com.evermind.server.http.AJPRequestHandler.run(AJPRequestHandler.java:313)<br>
+com.evermind.server.http.AJPRequestHandler.run(AJPRequestHandler.java:199)<br>
+oracle.oc4j.network.ServerSocketReadHandler$SafeRunnable.run(ServerSocketReadHandler.java:260)<br>
+com.evermind.util.ReleasableResourcePooledExecutor$MyWorker.run(ReleasableResourcePooledExecutor.java:303)<br>
+java.lang.Thread.run(Thread.java:735)<br>
+null

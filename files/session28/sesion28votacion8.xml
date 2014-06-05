@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>28</Sesion>
+        <NumeroVotacion>8</NumeroVotacion>
+        <Fecha>25/4/2012</Fecha>
+        <Titulo>Propuestas de creación de Subcomisiones.</Titulo>
+        <TextoExpediente> Propuesta de la Comisión de Economía y Competitividad, de creación de una Subcomisión sobre la transparencia en la información de los productos financieros e hipotecarios de las entidades de crédito.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

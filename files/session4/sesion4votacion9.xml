@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>4</Sesion>
+        <NumeroVotacion>9</NumeroVotacion>
+        <Fecha>11/1/2012</Fecha>
+        <Titulo>Propuestas de creación de Comisiones.</Titulo>
+        <TextoExpediente>Solicitud de creación de la Comisión de Seguimiento y Evaluación de los Acuerdos del Pacto de Toledo.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

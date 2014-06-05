@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>61</Sesion>
+        <NumeroVotacion>6</NumeroVotacion>
+        <Fecha>11/10/2012</Fecha>
+        <Titulo>Dictámenes de la Comisión de Asuntos Exteriores sobre Convenios internacionales.</Titulo>
+        <TextoExpediente>Acuerdo sobre inmunidades y prerrogativas entre el Reino de España y el Banco Interamericano de Desarrollo, hecho en Madrid el 15 de junio de 2012.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

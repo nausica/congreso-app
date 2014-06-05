@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>61</Sesion>
+        <NumeroVotacion>3</NumeroVotacion>
+        <Fecha>11/10/2012</Fecha>
+        <Titulo>Dictámenes de la Comisión de Asuntos Exteriores sobre Convenios internacionales.</Titulo>
+        <TextoExpediente>Acuerdo de Sede entre el Reino de España y el Instituto Forestal Europeo (IFE) relativo al establecimiento de una oficina del Instituto en España, hecho en Madrid el 28 de julio de 2011.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>
