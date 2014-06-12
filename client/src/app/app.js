@@ -36,7 +36,7 @@ angular.module('app').constant('I18N.MESSAGES', {
 
 angular.module('app').config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
-	$routeProvider.otherwise({redirectTo:'/members'});
+	$routeProvider.otherwise({redirectTo:'/index'});
 }]);
 
 /*

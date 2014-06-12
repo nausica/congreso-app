@@ -1,11 +1,11 @@
-angular.module('members', [])
+angular.module('members', ['resources.members'])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/members', {
 		templateUrl:'members/members-list.tpl.html',
 		controller:'MembersViewCtrl',
 		resolve:{
-			projects:['Members', function (Members) {
+			members:['Members', function (Members) {
 				//TODO: fetch only for the current user
 				return Members.all();
 			}]

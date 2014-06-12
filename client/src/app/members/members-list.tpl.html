@@ -1,1 +1,42 @@
 <h4>Members</h4>
+<table class="table table-bordered table-condensed table-striped table-hover">
+    <thead>
+    <tr>
+        <th class="span3">Name</th>
+        <th class="span5">Url</th>
+        <th class="span2">Email</th>
+        <th class="span2">Location</th>
+        <th class="span2">Group</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="member in members">
+        <td>{{member.name}}</td>
+        <td>{{member.url}}</td>
+        <td>{{member.email}}</td>
+        <td>{{member.location}}</td>
+        <td>{{member.group}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200/336699" alt="">
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200" alt="">
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200/336699" alt="">
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200" alt="">
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200/336699" alt="">
+    </div>
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <img src="http://placehold.it/200x200" alt="">
+    </div>
+</div>

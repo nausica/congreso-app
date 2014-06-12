@@ -6,13 +6,14 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-contrib-clean');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-recess');
+	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-karma');
 	grunt.loadNpmTasks('grunt-html2js');
 
 	// Default task.
 	grunt.registerTask('default', ['jshint','build','karma:unit']);
-	grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
+	//grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
+	grunt.registerTask('build', ['clean','html2js','concat', 'less', 'copy:assets']);
 	grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'recess:min','copy:assets']);
 	grunt.registerTask('test-watch', ['karma:watch']);
 
@@ -134,6 +135,7 @@ module.exports = function (grunt) {
 				dest: '<%= distdir %>/jquery.js'
 			}
 		},
+		/*
 		recess: {
 			build: {
 				files: {
@@ -152,6 +154,17 @@ module.exports = function (grunt) {
 				}
 			}
 		},
+		*/
+		less: {
+            build: {
+                options: {
+                    sourceMap: true,
+                    dumpLineNumbers: 'comments',
+                    relativeUrls: true
+                },
+                files: ['<%= src.less %>']
+            }
+	    },
 		watch:{
 			all: {
 				files:['<%= src.js %>', '<%= src.specs %>', '<%= src.lessWatch %>', '<%= src.tpl.app %>', '<%= src.tpl.common %>', '<%= src.html %>'],

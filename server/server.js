@@ -57,6 +57,7 @@ app.namespace('/databases/:db/collections/:collection*', function() {
 		next();
 	});
 	// Proxy database calls to the MongoDB
+	console.log( config.mongo )
 	app.all('/', mongoProxy(config.mongo.dbUrl, config.mongo.apiKey));
 });
 
