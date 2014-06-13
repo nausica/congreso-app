@@ -157,12 +157,12 @@ module.exports = function (grunt) {
 		*/
 		less: {
             build: {
-                options: {
-                    sourceMap: true,
-                    dumpLineNumbers: 'comments',
-                    relativeUrls: true
-                },
-                files: ['<%= src.less %>']
+                files: {
+					'<%= distdir %>/<%= pkg.name %>.css':
+					['<%= src.less %>'] },
+				options: {
+					compile: true
+				}
             }
 	    },
 		watch:{

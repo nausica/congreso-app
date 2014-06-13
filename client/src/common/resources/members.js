@@ -5,15 +5,11 @@ angular.module('resources.members')
 
 	var Members = $mongolabResource('members');
 
-	Members.forUser = function(userId, successcb, errorcb) {
-		//TODO: get projects for this user only (!)
-		return Members.query({}, successcb, errorcb);
+	Members.forProvince = function(province, successcb, errorcb) {
+		console.log('Province = '+ province)
+		return Members.query({'location': province}, successcb, errorcb);
   	};
-	/*
-	Projects.prototype.isProductOwner = function (userId) {
-		return this.productOwner === userId;
-  	};
-	*/
+	
 
 	return Members;
 }]);
