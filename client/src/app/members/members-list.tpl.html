@@ -5,9 +5,9 @@
     <div class="row">
         <div class="col-lg-6 col-md-offset-3"> <!-- (12-6) / 2-->
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Escribe tu código postal">
+                <input type="text" class="form-control" placeholder="Escribe tu ciudad" ng-model="province">
                 <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Enviar</button>
+                    <button class="btn btn-default" type="button" ng-click="changeProvince()">Enviar</button>
                 </span>
             </div><!-- /input-group -->
         </div><!-- /.col-lg-6 -->
@@ -23,7 +23,7 @@
         <div class="member-col-inner">
             <div class="highlight">
                 <h3><a target="_blank"href="{{member.url}}">{{member.name}}</a></h3>
-                <img src="http://www.congreso.es/wc/htdocs/web/img/diputados/{{member.key}}_10.jpg" alt=""> 
+                <img src="{{member.picture_url}}" alt=""> 
                 <p>{{member.group}}</p>
                 <button type="button" class="btn btn-primary">Contacta</button>
             </div>

@@ -144,29 +144,71 @@ var initDB = {
 				return str.replace(/\n|\r|\t/g, '');
 			};
 
-			phantom.create(function(ph) {
 
+			phantom.create(function(ph) {
+				
 				var scrape = function(url, callback) {
 					console.log(url)
 
 					var parse_page = function(page, ph) {
+
 						page.evaluate(
 							function() {
 						                        
 								var nameArr = [],
-									dipArr = [];
+									dipArr = [],
+									email,
+									picture_url;
 								                        
 								$('.nombre_dip').each(function() {
 									nameArr.push($(this).text());
 								});
-								$('.dip_rojo').each(function() {
-									dipArr.push($(this).text());
+								$('.dip_rojo').each(function(i) {
+									if (i === 0) {
+
+										// First: Location
+										// Diputado/a?
+										var str = $(this).text();
+										var arr = str.split('Diputado por');
+										var cleanStr = undefined;
+
+										if (!arr[1]) arr = str.split('Diputada por');
+
+										if (arr[1]) {
+											cleanStr = arr[1].replace(/\n|\r|\t|\./g, '').trim()
+										} 
+										dipArr.push(cleanStr);
+									} else {
+										dipArr.push($(this).text());
+									}
 								});
+
+								// Picture
+								picture_url = 'http://www.congreso.es' + $("img[name='foto']").attr('src')
+								/*
+								// Personal stuff
+								$('.webperso_dip').each(function() {
+									var links = $(this).find('a');
+
+									if (links.length) {
+										var regexp_mail = /mailto/;
+										links.forEach(function(link) {
+											if (link.attr('href') && regexp_mail.test(reglink.attr('href'))) {
+												email = link.text();
+											}
+										})
+									}
+									
+								})
+*/
 						 
 						    return {
 						        name: nameArr[0],
 						        location: dipArr[0],
-						        group: dipArr[1]
+						        group: dipArr[1],
+						        email: email,
+						        picture_url : picture_url
+
 						    };
 						                        
 						    }, function(result) {
@@ -219,7 +261,6 @@ var initDB = {
 
 						function(err, results){
 					    	// results is now an array of stats for each file
-					    	console.log(results)
 					    	ph.exit();
 						});
 				          

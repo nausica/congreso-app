@@ -7,7 +7,8 @@ var memberSchema = new mongoose.Schema({
 	email: 'String',
 	location: 'String',
 	key: 'Number',
-	group: 'String'
+	group: 'String',
+	picture_url: 'String'
 });
 
 // Subdocument schema for votings, session + order would be the key

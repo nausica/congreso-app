@@ -26,7 +26,11 @@ angular.module('members', ['resources.members'])
 
 .controller('MembersViewCtrl', ['$scope', '$location', '$routeParams', 'members', function ($scope, $location, $routeParams, members) {
 	$scope.members = members;
-	$scope.province = $routeParams.province;
+	$scope.province = 'Madrid';
+
+	$scope.changeProvince = function () {
+    	$location.path('/members/'+$scope.province);
+	};
 
 	$scope.viewMember = function (member) {
 		$location.path('/members/'+member.$id());
