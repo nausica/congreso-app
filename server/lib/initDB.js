@@ -157,8 +157,10 @@ var initDB = {
 						                        
 								var nameArr = [],
 									dipArr = [],
-									email,
-									picture_url;
+									picture_url,
+									committee_list = [],
+									personal_list = [],
+									social_profile = {};
 								                        
 								$('.nombre_dip').each(function() {
 									nameArr.push($(this).text());
@@ -185,33 +187,76 @@ var initDB = {
 
 								// Picture
 								picture_url = 'http://www.congreso.es' + $("img[name='foto']").attr('src')
-								/*
-								// Personal stuff
-								$('.webperso_dip').each(function() {
-									var links = $(this).find('a');
 
-									if (links.length) {
-										var regexp_mail = /mailto/;
-										links.forEach(function(link) {
-											if (link.attr('href') && regexp_mail.test(reglink.attr('href'))) {
-												email = link.text();
-											}
-										})
+								// Personal stuff
+								$('.texto_dip li:not(".regact_dip")').each(function(){
+									personal_list.push(
+										$(this).text()
+											.replace(/\n|\r|\t/g, '').trim()
+									)
+								})
+								
+								// Social stuff
+								$('.webperso_dip a').each(function() {
+									var link = $(this);
+									var link_href = link.attr('href');
+
+									var regexp_mail = /mailto/;
+									var regexp_twitter = /twitter/;
+									var regexp_facebook = /facebook/;
+									
+
+									if (link_href) {
+										if (regexp_mail.test(link_href)) {
+											social_profile.email = link.text()
+																	.replace(/\n|\r|\t/g, '').trim();
+										} else if (regexp_twitter.test(link_href)) {
+											social_profile.twitter = link_href;
+										} else if (regexp_facebook.test(link_href)) {
+											social_profile.facebook = link_href;
+										}
+									} 	
+									
+								});
+
+								// Committees
+								$('.listado_1').each(function(i){
+									// 0 Current
+									var self = $(this);
+									if (i == 0) {
+										self.find('li').each(function() {
+											var committee = {
+												role: $(this).text()
+													.replace(/\n|\r|\t|\./g, '').trim()
+											};
+											
+											$(this).find('a').each(function(){
+												committee.name = $(this).text();
+												committee.url = $(this).attr('href');
+											});
+
+											committee_list.push(committee);
+										});
 									}
 									
-								})
-*/
+									// 1 Previous
+								});
+
 						 
 						    return {
-						        name: nameArr[0],
-						        location: dipArr[0],
-						        group: dipArr[1],
-						        email: email,
-						        picture_url : picture_url
-
+							    name: nameArr[0],
+							    location: dipArr[0],
+							    group: dipArr[1],
+							    picture_url : picture_url,
+							    committee_list: committee_list,
+							    personal_list: personal_list,
+							    social_profile: social_profile
+							    
 						    };
 						                        
 						    }, function(result) {
+
+
 						       	var member = new Member(result);
 						
 								member.save(function(err) {

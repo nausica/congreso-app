@@ -1,5 +1,12 @@
 var mongoose = require('mongoose');
 
+var committeeSchema = new mongoose.Schema({
+	name: 'String',
+	role: 'String',
+	url: 'String'
+});
+
+
 // Subdocument schema for congress members
 var memberSchema = new mongoose.Schema({ 
 	name: 'String',
@@ -8,7 +15,15 @@ var memberSchema = new mongoose.Schema({
 	location: 'String',
 	key: 'Number',
 	group: 'String',
-	picture_url: 'String'
+	picture_url: 'String',
+	personal_list: ['String'],
+	committee_list: [committeeSchema],
+	social_profile: {
+		email: 'String',
+		twitter: 'String',
+		facebook: 'String',
+		blog: 'String'
+	}
 });
 
 // Subdocument schema for votings, session + order would be the key
@@ -38,6 +53,9 @@ var voteSchema = new mongoose.Schema({
 	vote: 'String'
 });
 
+
+
 module.exports.Member = mongoose.model('Member', memberSchema);
 module.exports.Voting = mongoose.model('Voting', votingSchema);
 module.exports.Vote = mongoose.model('Vote', voteSchema);
+module.exports.Committee = mongoose.model('Committee', committeeSchema);
