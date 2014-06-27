@@ -1,4 +1,4 @@
-angular.module('members', ['resources.members'])
+angular.module('members', ['resources.members', 'ui.bootstrap'])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider
@@ -50,6 +50,6 @@ angular.module('members', ['resources.members'])
 
 .controller('MemberDetailCtrl', ['$scope', '$location', '$routeParams', 'member', function ($scope, $location, $routeParams, member) {
 	$scope.member = member;
-	console.log(member)
+	
 	
 }]);
