@@ -1,27 +1,31 @@
-<div class="row">
-	<div class="col-xs-12 col-md-2">
-		 <img src="{{member.picture_url}}" alt=""> 
+<div class="starter">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12 col-md-2">
+				 <img src="{{member.picture_url}}" alt=""> 
+			</div>
+			<div class="col-xs-12 col-md-10">
+				<h3>{{member.name}}</h3>
+				<h4>{{member.location}}</h4>
+				<p ng-repeat="item in member.personal_list track by $index">
+					{{item}}
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<tabset>
+				<tab heading="Votaciones">
+
+				</tab>
+		    	<tab heading="Comisiones">
+		    		<div ng-repeat="c in member.committee_list">
+		    			<p>{{c.name}}</p>
+		    			<p>{{c.role}}</p>
+		    			<p>{{c.url}}</p>
+		    		</div>
+		    	</tab>
+		  	</tabs>
+		</div>
 	</div>
-	<div class="col-xs-12 col-md-10">
-		<h3>{{member.name}}</h3>
-		<h4>{{member.location}}</h4>
-		<p ng-repeat="item in member.personal_list track by $index">
-			{{item}}
-		</p>
-	</div>
-</div>
-<div class="row">
-	<tabset>
-		<tab heading="Votaciones">
-			
-		</tab>
-    	<tab heading="Comisiones">
-    		<div ng-repeat="c in member.committee_list">
-    			<p>{{c.name}}</p>
-    			<p>{{c.role}}</p>
-    			<p>{{c.url}}</p>
-    		</div>
-    	</tab>
-  	</tabs>
 </div>
 
