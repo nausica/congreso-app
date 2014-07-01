@@ -25,13 +25,13 @@ module.exports = function(req, res, next) {
 		case 'GET':
 		case 'HEAD':
 		case 'OPTIONS':
-	  		break;
+			break;
 		default:
-	  		// Check the token in the request against the one stored in the session
-	  		if ( requestToken !== token ) {
+			// Check the token in the request against the one stored in the session
+			if ( requestToken !== token ) {
 				return res.send(403);
-	  		}
-  	}
-  	// All is OK, continue as you were.
-  	return next();
+			}
+	}
+	// All is OK, continue as you were.
+	return next();
 };

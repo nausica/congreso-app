@@ -108,7 +108,12 @@ module.exports = function (grunt) {
 			jquery: {
 				src:['vendor/jquery/*.js'],
 				dest: '<%= distdir %>/jquery.js'
+			},
+			utils: {
+				src:['vendor/utils/*.js'],
+				dest: '<%= distdir %>/utils.js'
 			}
+
 		},
 		uglify: {
 			dist:{

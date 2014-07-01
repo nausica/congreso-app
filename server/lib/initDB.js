@@ -1,3 +1,4 @@
+/* globals setTimeout, $ */
 // code for initializing the DB w/ an admin user
 // and load the data for the first time
 var rest = require('request');
@@ -20,62 +21,62 @@ var initDB = {
 		initDB.user = cfg.security.user;
 		initDB.password = cfg.security.password;
 
-  	},
+	},
   
-  	checkDocument: function(collection, query, done) {
+	checkDocument: function(collection, query, done) {
 		var url = initDB.baseUrl + collection + '/';
 		console.log("rest.get - " + url);
 		var params = { apiKey: initDB.apiKey, q: JSON.stringify(query) };
 		var request = rest.get(url, { qs: params, json: {} }, function(err, response, data) {
 			if ( err ) {
 				console.log('There was an error checking the documents', err);
-		  	}
-		  	done(err, data);
+			}
+			done(err, data);
 		});
- 	},
+	},
   
 	createDocument: function(collection, doc, done) {
 		var url = initDB.baseUrl + collection + '/';
 		console.log("rest.post - " + url);
 		var request = rest.post(url, { qs: { apiKey:initDB.apiKey }, json: doc }, function(err, response, data) {
-	  		if ( !err ) {
+			if ( !err ) {
 				console.log('Document created', data);
-	  		}
+			}
 		done(err, data);
-		});
-  	},
-  
-  	deleteDocument: function(collection, docId, done) {
-		var url = initDB.baseUrl + collection + '/' + docId;
-		console.log("rest.del - " + url);
-		var request = rest.del(url, { qs: { apiKey:initDB.apiKey }, json: {} }, function(err, response, data) {
-	  		if ( !err ) {
-				console.log('Document deleted', data);
-	  		}
-	  		done(err, data);
 		});
 	},
   
-  	addAdminUser: function(done) {
+	deleteDocument: function(collection, docId, done) {
+		var url = initDB.baseUrl + collection + '/' + docId;
+		console.log("rest.del - " + url);
+		var request = rest.del(url, { qs: { apiKey:initDB.apiKey }, json: {} }, function(err, response, data) {
+			if ( !err ) {
+				console.log('Document deleted', data);
+			}
+			done(err, data);
+		});
+	},
+  
+	addAdminUser: function(done) {
 		console.log('*** Admin user properties:', initDB.adminUser);
 		console.log('Checking that admin user does not exist...');
 		initDB.checkDocument(initDB.usersCollection, initDB.adminUser, function(err, data) {
-	  		if ( !err && data.length === 0 ) {
+			if ( !err && data.length === 0 ) {
 				console.log('Creating new admin user...', err, data);
 				initDB.createDocument(initDB.usersCollection, initDB.adminUser, function(err, data) {
-		  			console.log('Created new admin user...');
+					console.log('Created new admin user...');
 					console.log(err);
-		  			console.log(data);
-		  			done(err, data);
+					console.log(data);
+					done(err, data);
 				});
-	  		} else {
+			} else {
 				if (data.message) {
-		  			console.log('Error: ' + data.message);
+					console.log('Error: ' + data.message);
 				} else {
 					console.log('User already created.');
 				}
 				done(err, data);
-	  		}
+			}
 		});
 	},
 
@@ -89,7 +90,7 @@ var initDB = {
 
 			} else {
 				if (data.message) {
-		  			console.log('Error: ' + data.message);
+					console.log('Error: ' + data.message);
 				} else {
 					console.log('Database already uploaded.');
 				}
@@ -112,13 +113,13 @@ var initDB = {
 					connectTimeoutMS: 30000 
 				} 
 			}, 
-            replset: { 
-            	socketOptions: { 
-            		keepAlive: 1, 
-            		connectTimeoutMS : 30000 
-            	} 
-            } 
-        };       
+			replset: { 
+				socketOptions: { 
+					keepAlive: 1, 
+					connectTimeoutMS : 30000 
+				} 
+			} 
+		};       
  
 		/*
 		 * Mongoose uses a different connection string format than MongoDB's standard.
@@ -148,20 +149,20 @@ var initDB = {
 			phantom.create(function(ph) {
 				
 				var scrape = function(url, callback) {
-					console.log(url)
+					console.log(url);
 
 					var parse_page = function(page, ph) {
 
 						page.evaluate(
 							function() {
-						                        
+												
 								var nameArr = [],
 									dipArr = [],
 									picture_url,
 									committee_list = [],
 									personal_list = [],
 									social_profile = {};
-								                        
+														
 								$('.nombre_dip').each(function() {
 									nameArr.push($(this).text());
 								});
@@ -172,12 +173,14 @@ var initDB = {
 										// Diputado/a?
 										var str = $(this).text();
 										var arr = str.split('Diputado por');
-										var cleanStr = undefined;
+										var cleanStr;
 
-										if (!arr[1]) arr = str.split('Diputada por');
+										if (!arr[1]) {
+											arr = str.split('Diputada por');
+										}
 
 										if (arr[1]) {
-											cleanStr = arr[1].replace(/\n|\r|\t|\./g, '').trim()
+											cleanStr = arr[1].replace(/\n|\r|\t|\./g, '').trim();
 										} 
 										dipArr.push(cleanStr);
 									} else {
@@ -186,15 +189,15 @@ var initDB = {
 								});
 
 								// Picture
-								picture_url = 'http://www.congreso.es' + $("img[name='foto']").attr('src')
+								picture_url = 'http://www.congreso.es' + $("img[name='foto']").attr('src');
 
 								// Personal stuff
 								$('.texto_dip li:not(".regact_dip")').each(function(){
 									personal_list.push(
 										$(this).text()
 											.replace(/\n|\r|\t/g, '').trim()
-									)
-								})
+									);
+								});
 								
 								// Social stuff
 								$('.webperso_dip a').each(function() {
@@ -215,15 +218,14 @@ var initDB = {
 										} else if (regexp_facebook.test(link_href)) {
 											social_profile.facebook = link_href;
 										}
-									} 	
-									
+									}
 								});
 
 								// Committees
 								$('.listado_1').each(function(i){
 									// 0 Current
 									var self = $(this);
-									if (i == 0) {
+									if (i === 0) {
 										self.find('li').each(function() {
 											var committee = {
 												role: $(this).text()
@@ -243,21 +245,21 @@ var initDB = {
 								});
 
 						 
-						    return {
-							    name: nameArr[0],
-							    location: dipArr[0],
-							    group: dipArr[1],
-							    picture_url : picture_url,
-							    committee_list: committee_list,
-							    personal_list: personal_list,
-							    social_profile: social_profile
-							    
-						    };
-						                        
-						    }, function(result) {
+							return {
+								name: nameArr[0],
+								location: dipArr[0],
+								group: dipArr[1],
+								picture_url : picture_url,
+								committee_list: committee_list,
+								personal_list: personal_list,
+								social_profile: social_profile
+								
+							};
+												
+							}, function(result) {
 
 
-						       	var member = new Member(result);
+								var member = new Member(result);
 						
 								member.save(function(err) {
 									if(err) {
@@ -266,32 +268,31 @@ var initDB = {
 										callback(null, result);
 									}
 								});
-      
 							});
-					}
+					};
 
 						//phantom.create(function(ph) {
 						ph.createPage(function(page) {
 							page.open(url, function(status) {
-						    console.log("opened site? ", status);  
+							console.log("opened site? ", status);  
 
-						        page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js', function(err) {
-						        	//jQuery Loaded.
-						            //Wait for a bit for AJAX content to load on the page. Here, we are waiting 5 seconds.
-						        	setTimeout(function() {
-						            	parse_page(page, ph);
-						                    
-						            }, 5000);
+								page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js', function(err) {
+									//jQuery Loaded.
+									//Wait for a bit for AJAX content to load on the page. Here, we are waiting 5 seconds.
+									setTimeout(function() {
+										parse_page(page, ph);
+											
+									}, 5000);
 						 
-						        });       
-						    });
+								});       
+							});
 						});
 						//});
-					}
+					};
 
 
 					var MAX_ID = 386;
-					var url_pattern = 'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Diputados/BusqForm?_piref73_1333155_73_1333154_1333154.next_page=/wc/fichaDiputado?idDiputado=<IDHERE>&idLegislatura=10'
+					var url_pattern = 'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Diputados/BusqForm?_piref73_1333155_73_1333154_1333154.next_page=/wc/fichaDiputado?idDiputado=<IDHERE>&idLegislatura=10';
 					var url_array = [];
 
 					// TODO Smart way to detect changes
@@ -305,10 +306,9 @@ var initDB = {
 						scrape,
 
 						function(err, results){
-					    	// results is now an array of stats for each file
-					    	ph.exit();
+							// results is now an array of stats for each file
+							ph.exit();
 						});
-				          
 			});
 		});
 	}

@@ -1,4 +1,4 @@
-angular.module('members', ['resources.members', 'ui.bootstrap'])
+angular.module('members', ['resources.members', 'ui.bootstrap', 'votings'])
 
 .config(['$routeProvider', function ($routeProvider) {
 	$routeProvider

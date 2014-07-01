@@ -9,12 +9,13 @@
 */
 
 var request = require('request');
-var fs 		= require('fs');
-var exec    = require('child_process').exec;
-var async 	= require('async');
-var xml2js 	= require('xml2js');
-var moment	= require('moment');
-var utf8 	= require('utf8');
+var fs = require('fs');
+var exec = require('child_process').exec;
+var async = require('async'); 
+var xml2js = require('xml2js');
+var moment = require('moment');
+var utf8 = require('utf8');
+var iconv = require('iconv-lite');
 
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
@@ -38,33 +39,37 @@ var SESSIONS = [
 	131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 
 	151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 
 	171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 
-	*/
+	
 	186, 187, 188, 189, 190,
 	191, 192
+	*/
+	10
 ];
 
 var parser = new xml2js.Parser();
+iconv.extendNodeEncodings();
+
 
 
 var downloadVotation = function(number, callback) {
-
-	var filename = 'session'+number;
+	var child;
+	var filename = 'session'+number;	
 	var url = 'http://www.congreso.es/votaciones/OpenData?sesion='+number+'&completa=1&legislatura='+LEGISLATURE;
 	var writeStream = fs.createWriteStream('./files/'+filename+'.zip');
 
 	request(url)
-		.pipe(writeStream)
+		.pipe(writeStream);
 
 	writeStream.on('close', function () {
 		console.log('All done!');
 		child = exec('cd files; unzip '+filename+'.zip -d'+filename, function(error, stdout, stderr) {
-		   	if (error !== null) {
-		    	console.log('error');
-		    	callback(error);
-		    } else {
-		    	console.log('ok');
-		    	callback(null, filename);
-		    }
+			if (error !== null) {
+				console.log('error');
+				callback(error);
+			} else {
+				console.log('ok');
+				callback(null, filename);
+			}
 		});
 	});
 };
@@ -74,20 +79,20 @@ var getDirs = function(rootDir, callback) {
 		var dirs = [];
 
 		files.forEach(function(file, index){
-			if (file[0] != '.') {
+			if (file[0] !=='.') {
 				var filePath = rootDir+'/'+file;
 				fs.stat(filePath, function(err, stat){
 					if (stat.isDirectory()) {
 						dirs.push(file);
 					}
-					if (files.length == (index + 1)) {
-						callback(err, dirs)
+					if (files.length === (index + 1)) {
+						callback(err, dirs);
 					}
-				})
+				});
 			}
-		})
-	})
-}
+		});
+	});
+};
 
 var importDir = function(rootDir, callback) {
 
@@ -97,54 +102,58 @@ var importDir = function(rootDir, callback) {
 
 		files.forEach(function(file, index){
 			
-			fs.readFile(rootDir+'/'+file, function(err, data) {
+			fs.readFile(rootDir+'/'+file, 'iso-8859-15', function(err, data) {
 				
 				parser.parseString(data, function (err, result) {
-					console.log(rootDir+'/'+file)
-					console.log(result)
+					console.log(rootDir+'/'+file);
+					console.log(result);
 					var info = result['Resultado']['Informacion'][0];
 					var totals = result['Resultado']['Totales'][0];
 					var votes = result['Resultado']['Votaciones'][0]['Votacion'];
-			        var voting = new Voting();
+					var voting = new Voting();
 
-			        voting.session = info['Sesion'] ? info['Sesion'][0] : undefined;
-			        voting.order = info['NumeroVotacion'][0];
-			        voting.date = moment(info['Fecha'][0], "DD/MM/YYYY").toDate();
-			        voting.title = info['Titulo'][0];
-			        voting.text = info['TextoExpediente'][0];
+					voting.session = info['Sesion'] ? info['Sesion'][0] : undefined;
+					voting.order = info['NumeroVotacion'][0];
+					voting.date = moment(info['Fecha'][0], "DD/MM/YYYY").toDate();
+					voting.title = info['Titulo'][0];
+					voting.text = info['TextoExpediente'][0];
 
-			        voting.result = totals['Asentimiento'] ? totals['Asentimiento'] : undefined;
-			        voting.votes_for = totals['AFavor'] ? totals['AFavor'][0] : undefined;
-			        voting.votes_against =  totals['EnContra'] ? totals['EnContra'][0] : undefined;
-			        voting.votes_abstaining = totals['Abstenciones'] ? totals['Abstenciones'][0] : undefined;
-			        voting.votes_blank = totals['NoVotan'] ? totals['NoVotan'][0] : undefined;
+					voting.result = totals['Asentimiento'] ? totals['Asentimiento'] : undefined;
+					voting.votes_for = totals['AFavor'] ? totals['AFavor'][0] : undefined;
+					voting.votes_against =  totals['EnContra'] ? totals['EnContra'][0] : undefined;
+					voting.votes_abstaining = totals['Abstenciones'] ? totals['Abstenciones'][0] : undefined;
+					voting.votes_blank = totals['NoVotan'] ? totals['NoVotan'][0] : undefined;
 
-			        //votes
-			        if (votes) {
-				        votes.forEach(function(v) {
-				        	var vote = new Vote();
-				        	vote.seat = v['Asiento'][0];
-				        	vote.name = v['Diputado'][0];
-				        	vote.group = v['Grupo'][0];
-				        	vote.vote = v['Voto'];
-				        	voting.votes_list.push(vote);
-				        });
-				    }
+					//votes
+					if (votes) {
+						votes.forEach(function(v) {
+							var vote = new Vote();
+							vote.seat = v['Asiento'][0];
+							vote.name = v['Diputado'][0];
+							vote.group = v['Grupo'][0];
+							vote.vote = v['Voto'];
+							voting.votes_list.push(vote);
+						});
+					}
 
-			        // Save voting
-			        voting.save(function(err) {
-			        	if(err) {
-							if (callback) callback(err);
+					// Save voting
+					voting.save(function(err) {
+						if(err) {
+							if (callback) {
+								callback(err);
+							}
 						} else {
-							if (callback) callback(null, result);
+							if (callback) {
+								callback(null, result);
+							}
 						}
-			        })
-			    });
-			})	
-		})
-	})
+					});
+				});
+			});	
+		});
+	});
 
-}
+};
 var loadDB = {
 
 	initialize: function(cfg) {
@@ -159,7 +168,7 @@ var loadDB = {
 		async.map(SESSIONS, downloadVotation, function(err, result){
 			console.log('done');
 			// TODO parse xml
-		})
+		});
 	},
 
 	importLatestVotations : function( done ) {
@@ -170,13 +179,13 @@ var loadDB = {
 					connectTimeoutMS: 30000 
 				} 
 			}, 
-            replset: { 
-            	socketOptions: { 
-            		keepAlive: 1, 
-            		connectTimeoutMS : 30000 
-            	} 
-            } 
-        };    
+			replset: { 
+				socketOptions: { 
+					keepAlive: 1, 
+					connectTimeoutMS : 30000 
+				} 
+			} 
+		};    
 		var mongodbUri = 'mongodb://'+loadDB.user+':'+loadDB.password+'@ds035897.mongolab.com:35897/congreso';
 		var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
@@ -197,7 +206,7 @@ var loadDB = {
 					function(err, results) {
 
 					});
-			})
+			});
 		});
 	}
 };

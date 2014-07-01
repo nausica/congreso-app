@@ -7,5 +7,5 @@ initDB.addAdminUser(function() {});
 initDB.checkMembersCollection(function() {console.log('done with Members')});
 
 //loadDB.downloadLatestVotations();
-//loadDB.initialize(config);
-//loadDB.importLatestVotations();
+loadDB.initialize(config);
+loadDB.importLatestVotations();

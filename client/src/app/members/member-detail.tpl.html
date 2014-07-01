@@ -15,7 +15,11 @@
 		<div class="row">
 			<tabset>
 				<tab heading="Votaciones">
-
+					<div ng-controller = "VotingsController">
+						<div ng-repeat="v in votings">
+			    			<p>{{v.title}}</p>
+		    			</div>
+					</div>
 				</tab>
 		    	<tab heading="Comisiones">
 		    		<div ng-repeat="c in member.committee_list">
