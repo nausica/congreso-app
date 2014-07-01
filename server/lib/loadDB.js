@@ -15,7 +15,8 @@ var async = require('async');
 var xml2js = require('xml2js');
 var moment = require('moment');
 var utf8 = require('utf8');
-var iconv = require('iconv-lite');
+var Iconv = require('iconv').Iconv;
+var iconv_lite = require('iconv-lite');
 
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
@@ -27,7 +28,7 @@ var LEGISLATURE = 10; // fixed, current
 
 
 var SESSIONS = [
-/*
+	/*
 	4,5,6,7,8,9,10,
 	11,12,13,15,16,17,18,19,20,
 	21,22,23,24,25,26,27,28,29,30,
@@ -39,17 +40,15 @@ var SESSIONS = [
 	131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 
 	151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 
 	171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 
-	
 	186, 187, 188, 189, 190,
-	191, 192
 	*/
-	10
+	191, 192, 193, 195, 196
+	
 ];
 
 var parser = new xml2js.Parser();
-iconv.extendNodeEncodings();
-
-
+// After this call all Node basic primitives will understand iconv-lite encodings.
+iconv_lite.extendNodeEncodings();
 
 var downloadVotation = function(number, callback) {
 	var child;
@@ -95,6 +94,7 @@ var getDirs = function(rootDir, callback) {
 };
 
 var importDir = function(rootDir, callback) {
+	var iconv, converted;
 
 	rootDir = './files/'+ rootDir;
 
@@ -102,10 +102,12 @@ var importDir = function(rootDir, callback) {
 
 		files.forEach(function(file, index){
 			
-			fs.readFile(rootDir+'/'+file, 'iso-8859-15', function(err, data) {
-				
+			fs.readFile(rootDir+'/'+file, 'ISO-8859-1', function(err, data) {
+				console.log(rootDir+'/'+file);
+				//iconv = new Iconv('ISO-8859-1', 'UTF8');
+				//converted = iconv.convert(data);
 				parser.parseString(data, function (err, result) {
-					console.log(rootDir+'/'+file);
+					
 					console.log(result);
 					var info = result['Resultado']['Informacion'][0];
 					var totals = result['Resultado']['Totales'][0];

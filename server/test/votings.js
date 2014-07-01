@@ -10,7 +10,8 @@ module.exports = {
 	testEncoding: function(test) {
 		iconv.extendNodeEncodings();
 
-		fs.readFile(rootDir+'session10/sesion10votacion1.xml', 'iso-8859-15', function(err, data) {
+		fs.readFile(rootDir+'session136/sesion136votacion125.xml', 'iso-8859-15', function(err, data) {
+			console.log(data);
 			parser.parseString(data, function (err, result) {
 				console.log(result);
 				test.equal(1,1);
@@ -18,4 +19,5 @@ module.exports = {
 			});
 		});
 	}
+
 };

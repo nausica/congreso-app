@@ -29,3 +29,8 @@ It is a complete project with a build system focused on AngularJS apps and tight
 ## Installation
 
 
+## Data collection
+libiconv
+phantomjs
+
+
