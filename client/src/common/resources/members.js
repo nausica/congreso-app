@@ -6,9 +6,9 @@ angular.module('resources.members')
 	var Members = $mongolabResource('members');
 
 	Members.forProvince = function(province, successcb, errorcb) {
-		console.log('Province = '+ province)
+
 		return Members.query({'location': province}, successcb, errorcb);
-  	};
+	};
 	
 
 	return Members;

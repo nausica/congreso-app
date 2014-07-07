@@ -21,6 +21,7 @@ var iconv_lite = require('iconv-lite');
 var mongoose = require('mongoose');
 var uriUtil = require('mongodb-uri');
 var models = require('../models/models.js');
+var Member = models.Member;
 var Voting = models.Voting;
 var Vote = models.Vote;
 var MIN_SESSION = 4; // min session number, below this you get an error
@@ -108,7 +109,6 @@ var importDir = function(rootDir, callback) {
 				//converted = iconv.convert(data);
 				parser.parseString(data, function (err, result) {
 					
-					console.log(result);
 					var info = result['Resultado']['Informacion'][0];
 					var totals = result['Resultado']['Totales'][0];
 					var votes = result['Resultado']['Votaciones'][0]['Votacion'];
@@ -126,30 +126,40 @@ var importDir = function(rootDir, callback) {
 					voting.votes_abstaining = totals['Abstenciones'] ? totals['Abstenciones'][0] : undefined;
 					voting.votes_blank = totals['NoVotan'] ? totals['NoVotan'][0] : undefined;
 
-					//votes
-					if (votes) {
-						votes.forEach(function(v) {
-							var vote = new Vote();
-							vote.seat = v['Asiento'][0];
-							vote.name = v['Diputado'][0];
-							vote.group = v['Grupo'][0];
-							vote.vote = v['Voto'];
-							voting.votes_list.push(vote);
-						});
-					}
-
 					// Save voting
-					voting.save(function(err) {
+					voting.save(function(err, voting_result) {
 						if(err) {
 							if (callback) {
 								callback(err);
 							}
 						} else {
-							if (callback) {
-								callback(null, result);
+							//votes
+							if (votes) {
+								votes.forEach(function(v) {
+									
+									var vote = new Vote();
+									vote.seat = v['Asiento'][0];
+									vote.name = v['Diputado'][0];
+									vote.group = v['Grupo'][0];
+									vote.vote = v['Voto'][0];
+									vote.voting_id = voting_result.id;
+									vote.member_id = '53b460fee08976c206f34450';
+									vote.save();
+									/*
+									// Find Member
+									Member.findOne({ name: vote.name }, function(err, member){
+										if (member) {
+											vote.voting_id = voting_result.id;
+											vote.member_id = member._id;
+											vote.save();
+										}
+									});
+*/
+								});
 							}
 						}
 					});
+
 				});
 			});	
 		});

@@ -161,15 +161,15 @@ module.exports = function (grunt) {
 		},
 		*/
 		less: {
-            build: {
-                files: {
+			build: {
+				files: {
 					'<%= distdir %>/<%= pkg.name %>.css':
 					['<%= src.less %>'] },
 				options: {
 					compile: true
 				}
-            }
-	    },
+			}
+		},
 		watch:{
 			all: {
 				files:['<%= src.js %>', '<%= src.specs %>', '<%= src.lessWatch %>', '<%= src.tpl.app %>', '<%= src.tpl.common %>', '<%= src.html %>'],

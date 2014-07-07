@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-2">
-				 <img src="{{member.picture_url}}" alt=""> 
+				<img src="{{member.picture_url}}" alt=""> 
 			</div>
 			<div class="col-xs-12 col-md-10">
 				<h3>{{member.name}}</h3>
@@ -15,21 +15,24 @@
 		<div class="row">
 			<tabset>
 				<tab heading="Votaciones">
-					<div ng-controller = "VotingsController">
-						<div ng-repeat="v in votings">
-			    			<p>{{v.title}}</p>
-		    			</div>
+					<div>
+						
+						<div ng-repeat="voting in votings">
+							<p>{{voting.title}}: {{voting.text}}</p>
+							<p>{{voting.session}}, {{voting.order}}: {{voting.formattedDate}}</p>
+							<p>Votos a favor: {{voting.votes_for}}</p>
+							<p>Votos en contra: {{voting.votes_against}}</p>
+						</div>
 					</div>
 				</tab>
-		    	<tab heading="Comisiones">
-		    		<div ng-repeat="c in member.committee_list">
-		    			<p>{{c.name}}</p>
-		    			<p>{{c.role}}</p>
-		    			<p>{{c.url}}</p>
-		    		</div>
-		    	</tab>
-		  	</tabs>
+				<tab heading="Comisiones">
+					<div ng-repeat="c in member.committee_list">
+						<p>{{c.name}}</p>
+						<p>{{c.role}}</p>
+						<p>{{c.url}}</p>
+					</div>
+				</tab>
+			</tabs>
 		</div>
 	</div>
 </div>
-

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var ObjectId = mongoose.Schema.ObjectId
 
 var committeeSchema = new mongoose.Schema({
 	name: 'String',
@@ -41,8 +42,8 @@ var votingSchema = new mongoose.Schema({
     votes_for: 'Number',
     votes_against: 'Number',
     votes_abstaining: 'Number',
-    votes_blank: 'Number',
-    votes_list: [voteSchema]
+    votes_blank: 'Number'
+    //,votes_list: [voteSchema]
 });
 
 // Subdocument schema for vote
@@ -50,7 +51,9 @@ var voteSchema = new mongoose.Schema({
 	seat: 'Number',
 	name: 'String', // Member name
 	group: 'String',
-	vote: 'String'
+	vote: 'String',
+	voting_id: ObjectId,
+	member_id: ObjectId
 });
 
 
