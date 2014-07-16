@@ -48,6 +48,7 @@ var SESSIONS = [
 ];
 
 var parser = new xml2js.Parser();
+var members_map = {};
 // After this call all Node basic primitives will understand iconv-lite encodings.
 iconv_lite.extendNodeEncodings();
 
@@ -94,75 +95,87 @@ var getDirs = function(rootDir, callback) {
 	});
 };
 
+var importFile = function(file, callback) {
+
+	fs.readFile(file, 'ISO-8859-1', function(err, data) {
+		console.log(file);
+		//iconv = new Iconv('ISO-8859-1', 'UTF8');
+		//converted = iconv.convert(data);
+		parser.parseString(data, function (err, result) {
+					
+			var info = result['Resultado']['Informacion'][0];
+			var totals = result['Resultado']['Totales'][0];
+			var votes = result['Resultado']['Votaciones'][0]['Votacion'];
+			var voting = new Voting();
+
+			voting.session = info['Sesion'] ? info['Sesion'][0] : undefined;
+			voting.order = info['NumeroVotacion'][0];
+			voting.date = moment(info['Fecha'][0], "DD/MM/YYYY").toDate();
+			voting.title = info['Titulo'][0];
+			voting.text = info['TextoExpediente'][0];
+
+			voting.result = totals['Asentimiento'] ? totals['Asentimiento'] : undefined;
+			voting.votes_for = totals['AFavor'] ? totals['AFavor'][0] : undefined;
+			voting.votes_against =  totals['EnContra'] ? totals['EnContra'][0] : undefined;
+			voting.votes_abstaining = totals['Abstenciones'] ? totals['Abstenciones'][0] : undefined;
+			voting.votes_blank = totals['NoVotan'] ? totals['NoVotan'][0] : undefined;
+
+			// Save voting
+			voting.save(function(err, voting_result) {
+
+				if(err) {
+					if (callback) {
+						callback(err);
+					}
+				} else {
+					//votes
+					if (votes) {
+						// Import vote function
+						var importVote = function(v, callback) {
+							var vote = new Vote();
+							vote.seat = v['Asiento'][0];
+							vote.name = v['Diputado'][0];
+							vote.group = v['Grupo'][0];
+							vote.vote = v['Voto'][0];
+							vote.voting_id = voting_result.id;
+							debugger;
+							vote.member_id = members_map[vote.name];
+							vote.save(function(err) {
+								callback(err);
+							});
+						};
+						async.mapSeries(
+							votes,
+							importVote,
+							function(err, results) {
+								console.log('Votes imported')
+								callback(null);
+						});
+					} else {
+						callback(null);
+					}
+				}
+			});
+		});
+	});
+};
+
 var importDir = function(rootDir, callback) {
 	var iconv, converted;
 
 	rootDir = './files/'+ rootDir;
 
 	fs.readdir(rootDir, function(err, files) {
+		// import files
+		async.mapSeries(
+			files.map(function(filename) {return rootDir+'/'+filename}),
+			importFile,
 
-		files.forEach(function(file, index){
-			
-			fs.readFile(rootDir+'/'+file, 'ISO-8859-1', function(err, data) {
-				console.log(rootDir+'/'+file);
-				//iconv = new Iconv('ISO-8859-1', 'UTF8');
-				//converted = iconv.convert(data);
-				parser.parseString(data, function (err, result) {
-					
-					var info = result['Resultado']['Informacion'][0];
-					var totals = result['Resultado']['Totales'][0];
-					var votes = result['Resultado']['Votaciones'][0]['Votacion'];
-					var voting = new Voting();
+			function(err, results) {
+				console.log('Files imported')
+				callback(null);
+			});
 
-					voting.session = info['Sesion'] ? info['Sesion'][0] : undefined;
-					voting.order = info['NumeroVotacion'][0];
-					voting.date = moment(info['Fecha'][0], "DD/MM/YYYY").toDate();
-					voting.title = info['Titulo'][0];
-					voting.text = info['TextoExpediente'][0];
-
-					voting.result = totals['Asentimiento'] ? totals['Asentimiento'] : undefined;
-					voting.votes_for = totals['AFavor'] ? totals['AFavor'][0] : undefined;
-					voting.votes_against =  totals['EnContra'] ? totals['EnContra'][0] : undefined;
-					voting.votes_abstaining = totals['Abstenciones'] ? totals['Abstenciones'][0] : undefined;
-					voting.votes_blank = totals['NoVotan'] ? totals['NoVotan'][0] : undefined;
-
-					// Save voting
-					voting.save(function(err, voting_result) {
-						if(err) {
-							if (callback) {
-								callback(err);
-							}
-						} else {
-							//votes
-							if (votes) {
-								votes.forEach(function(v) {
-									
-									var vote = new Vote();
-									vote.seat = v['Asiento'][0];
-									vote.name = v['Diputado'][0];
-									vote.group = v['Grupo'][0];
-									vote.vote = v['Voto'][0];
-									vote.voting_id = voting_result.id;
-									vote.member_id = '53b460fee08976c206f34450';
-									vote.save();
-									/*
-									// Find Member
-									Member.findOne({ name: vote.name }, function(err, member){
-										if (member) {
-											vote.voting_id = voting_result.id;
-											vote.member_id = member._id;
-											vote.save();
-										}
-									});
-*/
-								});
-							}
-						}
-					});
-
-				});
-			});	
-		});
 	});
 
 };
@@ -202,23 +215,29 @@ var loadDB = {
 		var mongooseUri = uriUtil.formatMongoose(mongodbUri);
 
 		mongoose.connect(mongooseUri, options);
-		var conn = mongoose.connection;             
+		var conn = mongoose.connection;
 		 
 		conn.on('error', console.error.bind(console, 'connection error:'));  
 		 
 		conn.once('open', function() {
-			// Wait for the database connection to establish.     
-			var arr = getDirs('./files', function(err, dirs){
+			// Wait for the database connection to establish.   
+			Member.find({}, function(err, members) {
+				members.forEach(function(m) {
+					m.name = m.name ? m.name.replace(/\s/g,' ') : undefined;
+					members_map[m.name] = m._id.toString();
+				});
+				console.log(members_map)
 				
-				//importDir('./files/'+dirs[0])
+				var arr = getDirs('./files', function(err, dirs){
 				async.mapSeries(dirs,
-				//async.mapSeries(['session16'],
 					importDir,
-
 					function(err, results) {
-
+						conn.close()
 					});
-			});
+				});
+
+			})  
+			
 		});
 	}
 };
