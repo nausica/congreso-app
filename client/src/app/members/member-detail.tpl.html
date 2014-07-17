@@ -15,8 +15,8 @@
 		<div class="row">
 			<tabset>
 				<tab heading="Votaciones">
-					<div>
-						<div class="well row" ng-repeat="voting in votings">
+					<div class="container">
+						<div class="voting-row row" ng-repeat="voting in votings">
 							<div class="col-md-2">
 								<time class="icon" datetime="2014-09-20">
 									<em>{{voting.formattedYear}}</em>
@@ -30,10 +30,10 @@
 							</div> 
 							<div class="col-md-3">
 								<!--<p>{{voting.session}}, {{voting.order}}</p>-->
-								<div class="{{voting.voteClass}}">
-									<p>{{member.name}}: {{voting.vote}}</p>
+								<div class="personal-vote voting-box {{voting.voteClass}}">
+									<p>{{member.name}}: <strong>{{voting.vote}}</strong></p>
 								</div>
-								<div class="{{voting.resultClass}}">
+								<div class="voting-box {{voting.resultClass}}">
 									<p>Votos a favor: {{voting.votes_for}}</p>
 									<p>Votos en contra: {{voting.votes_against}}</p>
 								</div>
