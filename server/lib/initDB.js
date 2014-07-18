@@ -82,6 +82,7 @@ var initDB = {
 
 	checkMembersCollection: function(done) {
 		console.log('Checking that members collection is empty...');
+		/*
 		initDB.checkDocument(initDB.membersCollection, {}, function(err, data) {
 			if ( !err && data.length === 0 ) {
 				console.log('Uploading members data...');
@@ -97,6 +98,9 @@ var initDB = {
 				done(err, data);
 			}
 		});
+*/
+		initDB.loadMembersData(done);
+
 	},
 
 	loadMembersData: function(done) {
@@ -291,12 +295,12 @@ var initDB = {
 					};
 
 
-					var MAX_ID = 386;
+					var MAX_ID = 397;
 					var url_pattern = 'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Diputados/BusqForm?_piref73_1333155_73_1333154_1333154.next_page=/wc/fichaDiputado?idDiputado=<IDHERE>&idLegislatura=10';
 					var url_array = [];
 
 					// TODO Smart way to detect changes
-					for (var i=256; i<=MAX_ID; i++) {
+					for (var i=296; i<=MAX_ID; i++) {
 						url_array.push( url_pattern.replace('<IDHERE>', i) );
 						//url_array.push('http://www.congreso.es')
 					}

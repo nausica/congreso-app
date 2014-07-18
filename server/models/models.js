@@ -37,7 +37,7 @@ var votingSchema = new mongoose.Schema({
     },
     title: 'String',
     text: 'String',
-    result: 'String', // No or Sí
+    result: 'String', // Asentimiento : No or Sí, if yes there are no votes
     attendees: 'Number',
     votes_for: 'Number',
     votes_against: 'Number',

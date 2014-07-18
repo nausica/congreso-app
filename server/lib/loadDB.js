@@ -138,7 +138,6 @@ var importFile = function(file, callback) {
 							vote.group = v['Grupo'][0];
 							vote.vote = v['Voto'][0];
 							vote.voting_id = voting_result.id;
-							debugger;
 							vote.member_id = members_map[vote.name];
 							vote.save(function(err) {
 								callback(err);

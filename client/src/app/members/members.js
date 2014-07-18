@@ -69,6 +69,10 @@
 		var votes_map = {};	
 
 		var resultClass = function(voting) {
+			// Asentimiento ?
+			if (voting.result === 'Sí') {
+				return 'bg-success';
+			}
 			if (voting.votes_for > voting.votes_against) {
 				return 'bg-success';
 			} else {
@@ -81,25 +85,18 @@
 
 		// Map votes results
 		angular.forEach(votes, function (vote) {
-			if (!votes_map[vote.voting_id.$oid]) { // Is this the only way to reach the id
+			if (!votes_map[vote.voting_id.$oid]) { // Is this the only way to reach the id?
 				votes_map[vote.voting_id.$oid] = vote.vote;
 			}
 		});
 
 		angular.forEach(votings, function (voting) {
-			var v = {};
+			var v = angular.extend({}, voting);
 			v.vote = votes_map[voting.$id()];
-			v.title = voting.title;
-			v.text = voting.text;
-			v.session = voting.session;
-			v.order = voting.order;
-			v.result = voting.result;
-			v.votes_for = voting.votes_for;
-			v.votes_against = voting.votes_against;
-			v.formattedDay = moment(voting.date).format('D');
-			v.formattedYear = moment(voting.date).format('YYYY');
-			v.formattedMonth = moment(voting.date).format('MMMM');
-			v.formattedDate = moment(voting.date).format('MMMM Do YYYY');
+			v.formattedDay = moment(voting.date.$date).format('D'); // GRRRRRRRR
+			v.formattedYear = moment(voting.date.$date).format('YYYY');
+			v.formattedMonth = moment(voting.date.$date).format('MMMM');
+			v.formattedDate = moment(voting.date.$date).format('MMMM Do YYYY');
 			v.resultClass = resultClass(v); 
 			v.voteClass = v.vote === 'Sí' ? 'bg-success' : (v.vote === 'No' ? 'bg-danger' : 'bg-warning' );
 			$scope.votings.push(v);

@@ -27,6 +27,7 @@
 							<div class="col-md-7">
 								<h4>{{voting.title}}</h4>
 								<p>{{voting.text}}</p>
+								<p>{{voting.session}}, {{voting.order}}</p>
 							</div> 
 							<div class="col-md-3">
 								<!--<p>{{voting.session}}, {{voting.order}}</p>-->
@@ -36,6 +37,8 @@
 								<div class="voting-box {{voting.resultClass}}">
 									<p>Votos a favor: {{voting.votes_for}}</p>
 									<p>Votos en contra: {{voting.votes_against}}</p>
+									<p>Votos en blanco: {{voting.votes_blank}}</p>
+									<p>Abstenciones: {{voting.votes_abstaining}}</p>
 								</div>
 							</div>
 						</div>
