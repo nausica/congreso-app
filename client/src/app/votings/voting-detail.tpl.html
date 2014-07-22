@@ -1,8 +1,42 @@
 <div class="starter">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12 col-md-12">
-				<h1>Votings page</h1>
+			<div class="col-xs-12 col-md-2">
+				<time class="icon" datetime="2014-09-20">
+					<em>{{voting.formattedYear}}</em>
+					<strong>{{voting.formattedMonth}}</strong>
+					<span>{{voting.formattedDay}}</span>
+				</time>
+			</div>
+			<div class="col-xs-12 col-md-10">
+				<h3>{{voting.title}}</h3>
+				<h4>{{voting.text}}</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="container">
+			<tabset>
+				<tab heading="Sí ({{votes_distribution['Yes'].count}})">
+					<div class="row" ng-repeat="vote in votes_distribution['Yes'].votes">
+						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
+					</div>
+				</tab>
+				<tab heading="No ({{votes_distribution['No'].count}})">
+					<div class="row" ng-repeat="vote in votes_distribution['No'].votes">
+						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
+					</div>
+				</tab>
+				<tab heading="En blanco ({{votes_distribution['Blank'].count}})">
+					<div class="row" ng-repeat="vote in votes_distribution['Blank'].votes">
+						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
+					</div>
+				</tab>
+				<tab heading="Se abstienen ({{votes_distribution['Abstaining'].count}})">
+					<div class="row" ng-repeat="vote in votes_distribution['Abstaining'].votes">
+						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
+					</div>
+				</tab>
+			</tabset>
 			</div>
 		</div>
 	</div>

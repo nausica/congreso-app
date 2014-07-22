@@ -51,7 +51,7 @@
 				templateUrl:'votings/voting-detail.tpl.html',
 				controller:'VotingDetailCtrl',
 				resolve:{
-					votings: ['Votings', '$route', function (Votings, $route) {
+					voting: ['Votings', '$route', function (Votings, $route) {
 						return Votings.getById($route.current.params.votingId);
 					}],
 					votes: ['Votes', '$route', function (Votes, $route) {
