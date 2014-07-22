@@ -16,7 +16,10 @@
 			<tabset>
 				<tab heading="Votaciones">
 					<div class="container">
-						<div class="voting-row row" ng-repeat="voting in votings">
+						<div class="row">
+                			<pagination total-items="pager.totalItems" items-per-page="pager.itemsPerPage" ng-model="pager.currentPage" boundary-links="true" max-size="pager.maxSize"></pagination>
+						</div>
+						<div class="voting-row row" ng-repeat="voting in filteredVotings">
 							<div class="col-md-2">
 								<time class="icon" datetime="2014-09-20">
 									<em>{{voting.formattedYear}}</em>
@@ -28,6 +31,7 @@
 								<h4>{{voting.title}}</h4>
 								<p>{{voting.text}}</p>
 								<p>{{voting.session}}, {{voting.order}}</p>
+								<button type="button" class="btn btn-primary" ng-click="viewVoting(voting)">Detalles</button>
 							</div> 
 							<div class="col-md-3">
 								<!--<p>{{voting.session}}, {{voting.order}}</p>-->

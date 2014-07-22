@@ -6,8 +6,10 @@ angular.module('resources.votes')
 	var Votes = $mongolabResource('votes');
 	
 	Votes.findByMemberId = function(memberId, successcb, errorcb) {
-		
 		return Votes.query({"member_id": { "$oid": memberId}}, successcb, errorcb);
+	};
+	Votes.findByVotingId= function(votingId, successcb, errorcb) {
+		return Votes.query({"voting_id": { "$oid": votingId}}, successcb, errorcb);
 	};
 	
 	return Votes;

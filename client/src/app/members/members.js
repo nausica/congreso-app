@@ -9,11 +9,11 @@
 		'resources.votings', 
 		'resources.votes', 
 		'ui.bootstrap', 
+		'votings',
 		'ngRoute'])
 
 	.config(['$routeProvider', function ($routeProvider) {
 		$routeProvider
-			
 			.when('/members/search/:province', {
 				templateUrl:'members/members-list.tpl.html',
 				controller:'MembersViewCtrl',
@@ -23,7 +23,6 @@
 					}]
 				}
 			})
-			
 			.when('/members', {
 				templateUrl:'members/members-list.tpl.html',
 				controller:'MembersViewCtrl',
@@ -45,6 +44,18 @@
 					}],
 					votes: ['Votes', '$route', function (Votes, $route) {
 						return Votes.findByMemberId($route.current.params.memberId);
+					}]
+				}
+			})
+			.when('/votings/:votingId', {
+				templateUrl:'votings/voting-detail.tpl.html',
+				controller:'VotingDetailCtrl',
+				resolve:{
+					votings: ['Votings', '$route', function (Votings, $route) {
+						return Votings.getById($route.current.params.votingId);
+					}],
+					votes: ['Votes', '$route', function (Votes, $route) {
+						return Votes.findByVotingId($route.current.params.votingId);
 					}]
 				}
 			});
@@ -80,6 +91,10 @@
 			}
 		};
 
+		$scope.viewVoting = function (voting) {
+			$location.path('/votings/'+voting.$id());
+		};
+
 		$scope.member = member;
 		$scope.votings = [];
 
@@ -92,6 +107,7 @@
 
 		angular.forEach(votings, function (voting) {
 			var v = angular.extend({}, voting);
+			v.$id = voting.$id; // for some reason it's not added.
 			v.vote = votes_map[voting.$id()];
 			v.formattedDay = moment(voting.date.$date).format('D'); // GRRRRRRRR
 			v.formattedYear = moment(voting.date.$date).format('YYYY');
@@ -101,6 +117,20 @@
 			v.voteClass = v.vote === 'Sí' ? 'bg-success' : (v.vote === 'No' ? 'bg-danger' : 'bg-warning' );
 			$scope.votings.push(v);
 		});
-	}]);
-	
+
+		$scope.pager = {
+			totalItems: $scope.votings.length,
+			currentPage : 1,
+			itemsPerPage : 5,
+			maxSize: 5
+		};
+
+  		$scope.$watch('pager.currentPage + pager.itemsPerPage', function() {
+  			console.log($scope.pager.currentPage)
+    		var begin = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
+        	end = begin + $scope.pager.itemsPerPage;
+
+      		$scope.filteredVotings = $scope.votings.slice(begin, end);
+    	});
+	}])
 }());

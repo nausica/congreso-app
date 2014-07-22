@@ -1,32 +1,17 @@
-angular.module('votings', ['resources.votings', 'ui.bootstrap'])
+/* global angular */
 
-.controller('VotingsController', ['$scope', '$routeParams', 'Votings', function ($scope,  $routeParams, Votings) {
+(function () {
 
-	var member_name = $scope.$parent.member.name;
+	'use strict';
 
-	$scope.member_id = $routeParams.memberId;
-	// Filtered votes_list
-	$scope.filteredVotings = [];
+	angular.module('votings', [
+		'resources.votings', 
+		'resources.votes', 
+		'ui.bootstrap', 
+		'ngRoute'])
 
-	console.log(member_name);
-	
-
-	Votings.all().then(function(votings) {
-		$scope.votings = votings;
-		$scope.votings.forEach(function(voting){
-			var v = {
-				title: voting.title,
-				text: voting.text,
-				votes_list: voting.votes_list.filter(function(vote){
-					return vote.name === member_name;
-				})
-			};
-			$scope.filteredVotings.push(v);
-		});
-	});
-
-	$scope.isMemberName = function(vote) {
-		return (vote.name === $scope.member_name);
-	};
-
-}]);
+	.controller('VotingDetailCtrl', ['$scope', '$location', '$routeParams', 'votings', 'votes', function ($scope, $location, $routeParams, votings, votes) {
+		console.log('dlsjdlsfj')
+  		
+	}])
+}());
