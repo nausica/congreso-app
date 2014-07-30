@@ -10,13 +10,38 @@
 				<p ng-repeat="item in member.personal_list track by $index">
 					{{item}}
 				</p>
-			</div>
+				<div ng-show="{{member.social_profile!=undefined}}">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" ng-click="contactMail(member.social_profile.email)"
+						ng-show="{{member.social_profile.email!=undefined}}">
+							<span class="icon-large icon-envelope"></span> 
+							Correo electrónico
+						</button>
+						<button type="button" class="btn btn-default" ng-click="contactTwitter(member.social_profile.twitter)"
+						ng-show="{{member.social_profile.twitter!=undefined}}">
+							<i class="icon-large icon-twitter"></i>
+							Envía un Tweet
+						</button>
+						<button type="button" class="btn btn-default" ng-click="contactFacebook(member.social_profile.facebook)"
+						ng-show="{{member.social_profile.facebook!=undefined}}">
+							<i class="icon-large icon-facebook"></i>
+							Comenta en mi Facebook
+						</button>
+						<button type="button" class="btn btn-default" ng-click="contactBlog(member.social_profile.blog)" ng-show="{{member.social_profile.blog!=undefined}}">
+							<i class="icon-large icon-blogger"></i>
+							Comenta en mi blog
+						</button>
+					</div>
+				</div>
+			</div>			
 		</div>
 		<div class="row">
+			<div class="tab-wrapper">
+				<div class="container">
 			<tabset>
 				<tab heading="Votaciones">
-					<div class="container">
-						<div class="row">
+					<div class="">
+						<div class="pagination-row row">
                 			<pagination total-items="pager.totalItems" items-per-page="pager.itemsPerPage" ng-model="pager.currentPage" boundary-links="true" max-size="pager.maxSize"></pagination>
 						</div>
 						<div class="voting-row row" ng-repeat="voting in filteredVotings">
@@ -31,7 +56,7 @@
 								<h4>{{voting.title}}</h4>
 								<p>{{voting.text}}</p>
 								<p>{{voting.session}}, {{voting.order}}</p>
-								<button type="button" class="btn btn-primary" ng-click="viewVoting(voting)">Detalles</button>
+								<button type="button" class="btn btn-primary" ng-click="viewVoting(voting)">Detalles de la votación</button>
 							</div> 
 							<div class="col-md-3">
 								<!--<p>{{voting.session}}, {{voting.order}}</p>-->
@@ -56,7 +81,8 @@
 						<p>{{c.url}}</p>
 					</div>
 				</tab>
-			</tabs>
+			</tabset>
+		</div>
 		</div>
 	</div>
 </div>

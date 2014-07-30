@@ -2,11 +2,13 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-12 col-md-2">
-				<time class="icon" datetime="2014-09-20">
-					<em>{{voting.formattedYear}}</em>
-					<strong>{{voting.formattedMonth}}</strong>
-					<span>{{voting.formattedDay}}</span>
-				</time>
+				<div class="voting-time-wrapper">
+					<time class="icon" datetime="2014-09-20">
+						<em>{{voting.formattedYear}}</em>
+						<strong>{{voting.formattedMonth}}</strong>
+						<span>{{voting.formattedDay}}</span>
+					</time>
+				</div>
 			</div>
 			<div class="col-xs-12 col-md-10">
 				<h3>{{voting.title}}</h3>
@@ -14,29 +16,59 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="container">
-			<tabset>
-				<tab heading="Sí ({{votes_distribution['Yes'].count}})">
-					<div class="row" ng-repeat="vote in votes_distribution['Yes'].votes">
-						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
-					</div>
-				</tab>
-				<tab heading="No ({{votes_distribution['No'].count}})">
-					<div class="row" ng-repeat="vote in votes_distribution['No'].votes">
-						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
-					</div>
-				</tab>
-				<tab heading="En blanco ({{votes_distribution['Blank'].count}})">
-					<div class="row" ng-repeat="vote in votes_distribution['Blank'].votes">
-						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
-					</div>
-				</tab>
-				<tab heading="Se abstienen ({{votes_distribution['Abstaining'].count}})">
-					<div class="row" ng-repeat="vote in votes_distribution['Abstaining'].votes">
-						<p ng-click="viewMember(vote)">{{vote.name}} <small>{{vote.group}}</small></p>
-					</div>
-				</tab>
-			</tabset>
+			<div class="tab-wrapper">
+				<div class="container">
+				<tabset>
+					<tab heading="Sí ({{votes_distribution['Yes'].count}})">
+						<div class="list-group">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Yes'].votes">
+								<div class="col-xs-12 col-md-2">
+									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="75x75" style="width: 75px; height: 75px;">
+								</div>
+								<div class="col-xs-12 col-md-10">
+									<p>{{vote.name}} <small>{{vote.group}}</small></p>
+								</div>
+							</a>
+						</div>
+					</tab>
+					<tab heading="No ({{votes_distribution['No'].count}})">
+						<div class="list-group">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['No'].votes">
+								<div class="col-xs-12 col-md-2">
+									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="140x140" style="width: 75px; height: 75px;">
+								</div>
+								<div class="col-xs-12 col-md-10">
+									<p>{{vote.name}} <small>{{vote.group}}</small></p>
+								</div>
+							</a>
+						</div>
+					</tab>
+					<tab heading="En blanco ({{votes_distribution['Blank'].count}})">
+						<div class="list-group">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Blank'].votes">
+								<div class="col-xs-12 col-md-2">
+									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="140x140" style="width: 75px; height: 75px;">
+								</div>
+								<div class="col-xs-12 col-md-10">
+									<p>{{vote.name}} <small>{{vote.group}}</small></p>
+								</div>
+							</a>
+						</div>
+					</tab>
+					<tab heading="Se abstienen ({{votes_distribution['Abstaining'].count}})">
+						<div class="list-group">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Abstaining'].votes">
+								<div class="col-xs-12 col-md-2">
+									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="140x140" style="width: 75px; height: 75px;">
+								</div>
+								<div class="col-xs-12 col-md-10">
+									<p>{{vote.name}} <small>{{vote.group}}</small></p>
+								</div>
+							</a>
+						</div>
+					</tab>
+				</tabset>
+			</div>
 			</div>
 		</div>
 	</div>

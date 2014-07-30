@@ -1,18 +1,36 @@
+body {
+    background-color: #f2eae0;
+}
 .highlight {
-	padding: 9px 14px;
 	margin-bottom: 14px;
-	background-color: #e4eaea;
-	border: 1px solid #256e7d;
-	border-radius: 4px;
+	background-color: #fff;
+
+    box-shadow: 3px 3px 12px rgba(64, 55, 48, 0.25);
+}
+
+.member-image {
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 225px;
 }
 .member-col-inner {
 	padding: 10px
 }
 .member-name {
-	min-height: 40px;
+	height: 75px;
+    padding: 5px 10px;
+}
+.member-name p.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.member-actions {
+    padding: 5px;
 }
 h4 a {
-	color: #256e7d;
+	color: @central-panel-green;
 }
 .jumbotron h2 {
 	color: #fff;
@@ -23,7 +41,7 @@ h4 a {
 }
 .starter {
 	padding: 70px 15px;
-	background-color: #349791;
+	background-color: #639880;
 }
 .starter .container {
 	background-color: #fff;
@@ -77,6 +95,9 @@ time.icon span {
 	border-radius: 4px;
 	padding: 5px
 }
+.pagination-row {
+    text-align: center;
+}
 .voting-row {
 	min-height: 20px;
 	padding: 19px;
@@ -108,3 +129,58 @@ time.icon span {
 .voting-box .voting-icon-abstaining {
 	background-position: 0px 1px;
 }
+
+.voting-time-wrapper, .tab-wrapper {
+    margin-top: 20px;
+}
+.list-group {
+    margin-top: 10px;
+}
+.list-group-item:first-child {
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+a.list-group-item {
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+a.list-group-item {
+    height: auto;
+    min-height: 85px;
+}
+a.list-group-item {
+    color: #555;
+    cursor: pointer;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #efefef;
+    border: 1px solid #ddd;
+}
+
+a.list-group-item:hover, a.list-group-item:focus {
+    border-left: 10px solid #f58723;
+    border-right: 10px solid #f58723;
+    background-color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.icon-large {
+    background-image: url("img/extra-glyphicons.png");
+    background-position: 24px 24px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 28px;
+    line-height: 28px;
+    vertical-align: text-bottom;
+    width: 28px;
+}
+.icon-large.icon-twitter-t{ background-position: -276px -714px;  } 
+.icon-large.icon-twitter{ background-position: -276px -748px;  } 
+.icon-large.icon-facebook{ background-position: -276px -680px;  }
+.icon-large.icon-blogger{ background-position: -230px -1883px;  } 
+.icon-large.icon-envelope{ background-position: 0 -330px;  } 

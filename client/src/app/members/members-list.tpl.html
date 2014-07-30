@@ -4,7 +4,7 @@
 			<h2>Pregunta a tus representantes en el congreso.</h2>
 		</div>
 		<div class="row">
-			<div class="col-lg-6 col-md-offset-3"> <!-- (12-6) / 2-->
+			<div class="col-lg-6 col-md-offset-2">
 				<div class="input-group">
 					<input type="text" class="form-control" placeholder="Escribe tu ciudad" ng-model="province">
 					<span class="input-group-btn">
@@ -14,25 +14,24 @@
 			</div><!-- /.col-lg-6 -->
 		</div><!-- /.row -->
 		<div class="text-center">
-			<!-- <h4>Aquí puedes ver la lista de representantes de {{province}}.</h4> -->
+			<h4>Aquí puedes ver la lista de representantes de {{display_province}}.</h4>
 			<h4>Elige al miembro del Congreso que te gustaría contactar:</h4>
 		</div>
 	</div>
 </div>
-
-<div class="container">
-	<div class="row text-center">
-		<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="member in members">
-			<div class="member-col-inner">
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-10 col-sm-5 col-md-2" ng-repeat="member in members">
 				<div class="highlight">
 					<div class="member-name">
 						<h4><a target="_blank"href="{{member.url}}">{{member.name}}</a></h4>
+						<p class="ellipsis"><small>{{member.group}}</small></p>
 					</div>
-					<img src="{{member.picture_url}}" alt=""> 
-					<p>{{member.group}}</p>
-					<button type="button" class="btn btn-primary" ng-click="viewMember(member)">Contacta</button>
+					<div class="member-image" style="background-image:url({{member.picture_url}})"></div>
+					<div class="member-actions text-center">
+						<button type="button" class="btn btn-primary" ng-click="viewMember(member)">Contacta</button>
+					<div>
 				</div>
 			</div>
-		</div>
 	</div>
 </div>

@@ -64,7 +64,8 @@
 
 	.controller('MembersViewCtrl', ['$scope', '$location', '$routeParams', 'members', function ($scope, $location, $routeParams, members) {
 		$scope.members = members;
-		//$scope.province = 'Madrid';
+		$scope.province = $routeParams.province;
+		$scope.display_province = ($scope.province ?   $scope.province : 'Todas las provincias') + ' (' + $scope.members.length + ')';
 
 		$scope.changeProvince = function () {
 			$location.path('/members/search/'+$scope.province);
@@ -76,7 +77,7 @@
 
 	}])
 
-	.controller('MemberDetailCtrl', ['$scope', '$location', '$routeParams', 'member', 'votings', 'votes', function ($scope, $location, $routeParams, member, votings, votes) {
+	.controller('MemberDetailCtrl', ['$scope', '$location', '$window', '$routeParams', 'member', 'votings', 'votes', function ($scope, $location, $window, $routeParams, member, votings, votes) {
 		var votes_map = {};	
 
 		var resultClass = function(voting) {
@@ -94,6 +95,19 @@
 		$scope.viewVoting = function (voting) {
 			$location.path('/votings/'+voting.$id());
 		};
+
+		$scope.contactMail = function(email) {
+			$window.open('mailto:'+email+'?subject=mail subject&body=mail body', '_blank');
+		}
+		$scope.contactFacebook = function(facebook) {
+			$window.open(facebook, '_blank');
+		}
+		$scope.contactTwitter = function(twitter) {
+			$window.open(twitter, '_blank');
+		}
+		$scope.contactBlog = function(blog) {
+			$window.open(blog, '_blank');
+		}
 
 		$scope.member = member;
 		$scope.votings = [];
