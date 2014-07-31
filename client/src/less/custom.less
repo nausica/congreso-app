@@ -2,12 +2,34 @@ body {
     background-color: #f2eae0;
 }
 .highlight {
-	margin-bottom: 14px;
+	margin-bottom: 20px;
 	background-color: #fff;
-
+}
+.member-page, .highlight, .voting-page, .about-page {
     box-shadow: 3px 3px 12px rgba(64, 55, 48, 0.25);
 }
+.member-page {
+    .member-image-small {
+        background-repeat: no-repeat; 
+        height: 165px;
+        position: relative;
+    }
+    .member-clip {
+        background-image: url("/static/img/clip-128-test.png"); 
+        position: absolute; 
+        height: 128px; 
+        width: 128px; 
+        top: -21px; 
+        left: -54px;
+    }
+}
 
+.members-row {
+    margin: 0px 50px;
+}
+.nav-shadow {
+    box-shadow: 0 0 5px rgba(64, 55, 48, 0.25);
+}
 .member-image {
     background-position: center center;
     background-size: cover;
@@ -20,6 +42,17 @@ body {
 .member-name {
 	height: 75px;
     padding: 5px 10px;
+    position: relative;
+
+    .featured-flag {
+        position: absolute; 
+        transform: rotate(90deg); 
+        background-color: rgb(237, 105, 59); 
+        color: rgb(242, 234, 224); 
+        padding: 4px; 
+        left: 84%; 
+        top: 3%;
+    }
 }
 .member-name p.ellipsis {
     text-overflow: ellipsis;
@@ -29,19 +62,23 @@ body {
 .member-actions {
     padding: 5px;
 }
-h4 a {
-	color: @central-panel-green;
-}
+
 .jumbotron h2 {
 	color: #fff;
-	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+	/*text-shadow: 2px 4px 3px rgba(0,0,0,0.3);*/
 }
 .jumbotron h4 {
 	color: #fff;
+    span.provincia {
+        color: @central-panel-green-lighter;
+    }
+}
+.my-jumbrotron {
+    padding-bottom: 20px;
 }
 .starter {
 	padding: 70px 15px;
-	background-color: #639880;
+	/*background-color: #639880;*/
 }
 .starter .container {
 	background-color: #fff;
@@ -60,7 +97,7 @@ time.icon {
 }
 time.icon em {
     bottom: 0.3em;
-    color: #fd9f1b;
+    color: @orange-main;
     position: absolute;
 }
 time.icon * {
@@ -72,9 +109,9 @@ time.icon * {
     width: 100%;
 }
 time.icon strong {
-    background-color: #fd9f1b;
-    border-bottom: 1px dashed #f37302;
-    box-shadow: 0 2px 0 #fd9f1b;
+    background-color: @orange-main;
+    border-bottom: 1px dashed @orange-light;
+    box-shadow: 0 2px 0 @orange-main;
     color: #fff;
     padding: 3px 0;
     position: absolute;
@@ -162,8 +199,8 @@ a.list-group-item {
 }
 
 a.list-group-item:hover, a.list-group-item:focus {
-    border-left: 10px solid #f58723;
-    border-right: 10px solid #f58723;
+    border-left: 10px solid @orange-light;
+    border-right: 10px solid @orange-light;
     background-color: #fff;
     text-decoration: none;
     font-weight: bold;

@@ -1,29 +1,28 @@
-<div class="jumbotron">
-	<div class="container">
-		<div class="text-center">
-			<h2>Pregunta a tus representantes en el congreso.</h2>
-		</div>
-		<div class="row">
-			<div class="col-lg-6 col-md-offset-2">
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Escribe tu ciudad" ng-model="province">
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button" ng-click="changeProvince()">Enviar</button>
-					</span>
-				</div><!-- /input-group -->
-			</div><!-- /.col-lg-6 -->
-		</div><!-- /.row -->
-		<div class="text-center">
-			<h4>Aquí puedes ver la lista de representantes de {{display_province}}.</h4>
-			<h4>Elige al miembro del Congreso que te gustaría contactar:</h4>
+<div class="container-fluid">
+	<div class="jumbotron row my-jumbrotron">
+		<div class="col-md-6 col-md-offset-2">
+			<div class="text-center">
+				<h2>Pregunta a tus representantes en el congreso.</h2>
+			</div>
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Escribe tu ciudad" ng-model="province">
+				<span class="input-group-btn">
+					<a ui-sref="search({ province: province })" class="btn btn-default" type="button">Enviar</a>
+				</span>
+			</div><!-- /input-group -->
+			<div class="text-center">
+				<h4>Aquí puedes ver la lista de representantes de <span class="provincia">{{display_province}}</span>.</h4>
+				<h4>Elige al miembro del Congreso que te gustaría contactar:</h4>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="container-fluid">
-	<div class="row">
+	<div class="row members-row">
 		<div class="col-xs-10 col-sm-5 col-md-2" ng-repeat="member in members">
 				<div class="highlight">
 					<div class="member-name">
+						<div ng-show="{{member.inactive}}" class="featured-flag">
+                			Baja
+            			</div>
 						<h4><a target="_blank"href="{{member.url}}">{{member.name}}</a></h4>
 						<p class="ellipsis"><small>{{member.group}}</small></p>
 					</div>

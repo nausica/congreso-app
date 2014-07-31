@@ -5,7 +5,7 @@
 	'use strict';
 
 	angular.module('app', [
-		'ngRoute',
+		'ui.router',
 		'members',
 		'votings',
 		'templates.app',
@@ -17,19 +17,29 @@
 	});
 
 
-	angular.module('app').config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-		$locationProvider.html5Mode(true);
-		$routeProvider.otherwise({redirectTo:'/members'});
-	}]);
-
+	angular.module('app')
+		.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function ($locationProvider, $stateProvider, $urlRouterProvider) {
+			$locationProvider.html5Mode(true);
+			// For any unmatched url, send to /members
+    		$urlRouterProvider.otherwise("/members");
+    		$stateProvider
+				.state('about', {
+					url: '/about',
+					templateUrl:'about.tpl.html'
+				})
+				.state('movement', {
+					url: '/movement',
+					templateUrl:'movement.tpl.html'
+				})
+	}])
 
 	angular.module('app')
 		.controller('AppCtrl', ['$scope', function($scope) {
 		
 		}])
 
-		.controller('HeaderCtrl', ['$scope', '$location', '$route',
-			function ($scope, $location, $route) {	
+		.controller('HeaderCtrl', ['$scope', '$location',
+			function ($scope, $location) {	
 				
 				$scope.home = function () {
 					$location.path('/members');

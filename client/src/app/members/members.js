@@ -10,20 +10,22 @@
 		'resources.votes', 
 		'ui.bootstrap', 
 		'votings',
-		'ngRoute'])
+		'ui.router'])
 
-	.config(['$routeProvider', function ($routeProvider) {
-		$routeProvider
-			.when('/members/search/:province', {
+	.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+		$stateProvider
+			.state('search', {
+				url: '/members/search/:province',
 				templateUrl:'members/members-list.tpl.html',
 				controller:'MembersViewCtrl',
 				resolve:{
-					members:['Members', '$route', function (Members, $route) { // $routeParams.province isn't set when the callback is executed, using $route 
-						return Members.forProvince($route.current.params.province);
+					members:['Members', '$stateParams', function (Members, $stateParams) { 
+						return Members.forProvince($stateParams.province);
 					}]
 				}
 			})
-			.when('/members', {
+			.state('members', {
+				url: '/members',
 				templateUrl:'members/members-list.tpl.html',
 				controller:'MembersViewCtrl',
 				resolve:{
@@ -32,44 +34,42 @@
 					}]
 				}
 			})
-			.when('/members/:memberId', {
+			.state('member', {
+				url: '/members/:memberId',
 				templateUrl:'members/member-detail.tpl.html',
 				controller:'MemberDetailCtrl',
 				resolve:{
-					member:['Members', '$route', function (Members, $route) {
-						return Members.getById($route.current.params.memberId);
+					member:['Members', '$stateParams', function (Members, $stateParams) {
+						return Members.getById($stateParams.memberId);
 					}],
-					votings: ['Votings', '$route', function (Votings, $route) {
+					votings: ['Votings', function (Votings) {
 						return Votings.all();
 					}],
-					votes: ['Votes', '$route', function (Votes, $route) {
-						return Votes.findByMemberId($route.current.params.memberId);
+					votes: ['Votes', function (Votes) {
+						return Votes.all();
 					}]
 				}
 			})
-			.when('/votings/:votingId', {
+			.state('voting', {
+				url: '/votings/:votingId',
 				templateUrl:'votings/voting-detail.tpl.html',
 				controller:'VotingDetailCtrl',
 				resolve:{
-					voting: ['Votings', '$route', function (Votings, $route) {
-						return Votings.getById($route.current.params.votingId);
+					voting: ['Votings', '$stateParams', function (Votings, $stateParams) {
+						return Votings.getById($stateParams.votingId);
 					}],
-					votes: ['Votes', '$route', function (Votes, $route) {
-						return Votes.findByVotingId($route.current.params.votingId);
+					votes: ['Votes', '$stateParams', function (Votes, $stateParams) {
+						return Votes.findByVotingId($stateParams.votingId);
 					}]
 				}
 			});
 
 	}])
 
-	.controller('MembersViewCtrl', ['$scope', '$location', '$routeParams', 'members', function ($scope, $location, $routeParams, members) {
+	.controller('MembersViewCtrl', ['$scope', '$location', '$stateParams', 'members', function ($scope, $location, $stateParams, members) {
 		$scope.members = members;
-		$scope.province = $routeParams.province;
-		$scope.display_province = ($scope.province ?   $scope.province : 'Todas las provincias') + ' (' + $scope.members.length + ')';
-
-		$scope.changeProvince = function () {
-			$location.path('/members/search/'+$scope.province);
-		};
+		$scope.province = $stateParams.province;
+		$scope.display_province = ($scope.province ?   $scope.province : 'todas las provincias') + ' (' + $scope.members.length + ')';
 
 		$scope.viewMember = function (member) {
 			$location.path('/members/'+member.$id());
@@ -77,7 +77,7 @@
 
 	}])
 
-	.controller('MemberDetailCtrl', ['$scope', '$location', '$window', '$routeParams', 'member', 'votings', 'votes', function ($scope, $location, $window, $routeParams, member, votings, votes) {
+	.controller('MemberDetailCtrl', ['$scope', '$location', '$window', '$stateParams', 'member', 'votings', 'votes', function ($scope, $location, $window, $stateParams, member, votings, votes) {
 		var votes_map = {};	
 
 		var resultClass = function(voting) {

@@ -7,10 +7,9 @@
 	angular.module('votings', [
 		'resources.votings', 
 		'resources.votes', 
-		'ui.bootstrap', 
-		'ngRoute'])
+		'ui.bootstrap'])
 
-	.controller('VotingDetailCtrl', ['$scope', '$location', '$routeParams', 'voting', 'votes', function ($scope, $location, $routeParams, voting, votes) {
+	.controller('VotingDetailCtrl', ['$scope', '$location', 'voting', 'votes', function ($scope, $location, voting, votes) {
 		$scope.voting = voting;
 		$scope.voting.formattedDay = moment(voting.date.$date).format('D'); // GRRRRRRRR
 		$scope.voting.formattedYear = moment(voting.date.$date).format('YYYY');

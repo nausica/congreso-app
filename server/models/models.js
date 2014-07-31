@@ -7,7 +7,6 @@ var committeeSchema = new mongoose.Schema({
 	url: 'String'
 });
 
-
 // Subdocument schema for congress members
 var memberSchema = new mongoose.Schema({ 
 	name: 'String',
@@ -19,12 +18,17 @@ var memberSchema = new mongoose.Schema({
 	picture_url: 'String',
 	personal_list: ['String'],
 	committee_list: [committeeSchema],
+	//committee_list: [ObjectId],
 	social_profile: {
 		email: 'String',
 		twitter: 'String',
 		facebook: 'String',
 		blog: 'String'
-	}
+	},
+	inactive: {
+        type: Boolean,
+        default: 'false'
+    }
 });
 
 // Subdocument schema for votings, session + order would be the key

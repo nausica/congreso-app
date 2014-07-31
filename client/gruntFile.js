@@ -94,7 +94,7 @@ module.exports = function (grunt) {
 				}
 			},
 			angular: {
-				src:['vendor/angular/angular.js', 'vendor/angular/angular-route.js'],
+				src:['vendor/angular/angular.js', 'vendor/angular/angular-route.js', 'vendor/angular-ui/ui-router/angular-ui-router.js'],
 				dest: '<%= distdir %>/angular.js'
 			},
 			mongo: {
