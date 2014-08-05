@@ -43,11 +43,11 @@
 						return Members.getById($stateParams.memberId);
 					}],
 					votings: ['Votings', function (Votings) {
-						return Votings.all();
+						return Votings.previous3Months();
 					}],
-					votes: ['Votes', function (Votes) {
-						return Votes.all();
-					}]
+					votes: function (Votes, $stateParams, votings, member) {
+						return Votes.findByMemberIdAndVotings($stateParams.memberId, votings);
+					}
 				}
 			})
 			.state('voting', {
