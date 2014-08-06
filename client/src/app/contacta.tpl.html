@@ -1,0 +1,31 @@
+<div class="starter">
+	<div class="container member-page">
+		<div class="row">
+			<div class="col-xs-10 col-md-5">
+				<h1>Contacta</h1>
+				<form name="contactForm" ng-controller="ContactCtrl" ng-submit="submit()" role="form">
+					<div class="form-group" ng-class="{'has-success':contactForm.sender.$valid, 'has-error':contactForm.sender.$error.email, 'has-warning':contactForm.sender.$error.required}">
+						<label for="sender">
+					    	Correo Electrónico
+						</label>
+        				<input id="sender" name="sender" ng-model="sender" placeholder="Email" required="" type="email" class="form-control">
+      				</div>
+					<div class="form-group" ng-class="{'has-success':contactForm.subject.$valid, 'has-warning':contactForm.subject.$error.required}">
+						<label for="subject">
+					    	Asunto	
+					    </label>
+					    <input id="subject" name="subject" ng-model="subject" placeholder="Subject" required="" type="text" class="form-control">
+					</div>
+					<div class="form-group" ng-class="{'has-success':contactForm.message.$valid, 'has-warning':contactForm.message.$error.required}">
+      					<label for="message">
+					    	Mensaje
+						</label>
+        				<textarea name="message" ng-model="message" placeholder="Message" required="" class="form-control"></textarea>
+      				</div>
+      				<button type="submit" class="btn btn-default" ng-disabled="contactForm.$invalid">Enviar</button>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

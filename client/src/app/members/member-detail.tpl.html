@@ -14,7 +14,7 @@
 				</p>
 				<div ng-show="{{member.social_profile!=undefined}}">
 					<div class="btn-group">
-						<button type="button" class="btn btn-default" ng-click="contactMail(member.social_profile.email)"
+						<button type="button" class="btn btn-default" ng-click="contactMail(member.social_profile.email, member.name)"
 						ng-show="{{member.social_profile.email!=undefined}}">
 							<span class="icon-large icon-envelope"></span> 
 							Correo electrónico

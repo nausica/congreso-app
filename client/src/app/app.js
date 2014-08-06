@@ -31,6 +31,10 @@
 					url: '/movement',
 					templateUrl:'movement.tpl.html'
 				})
+				.state('contacta', {
+					url: '/contacta',
+					templateUrl:'contacta.tpl.html'
+				})
 	}])
 
 	angular.module('app')
@@ -43,6 +47,25 @@
 				
 				$scope.home = function () {
 					$location.path('/members');
+				};
+		
+			}
+		])
+		.controller('ContactCtrl', ['$scope', '$http',
+			function ($scope, $http) {	
+				
+				$scope.submit = function () {
+					var data = {
+						sender: $scope.sender,
+						subject: $scope.subject,
+						message: $scope.message
+					};
+					$http({
+					    method: 'POST',
+					    url: '/send',
+					    data: $.param(data),
+					    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+					})
 				};
 		
 			}

@@ -96,14 +96,21 @@
 			$location.path('/votings/'+voting.$id());
 		};
 
-		$scope.contactMail = function(email) {
-			$window.open('mailto:'+email+'?subject=mail subject&body=mail body', '_blank');
+		$scope.contactMail = function(email, name) {
+			var formattedBody = "Querido\/a "+ name + ",\n[Tu mensaje aquí]\n\nSinceramente,\n[Tu nombre aquí]\n#contactales";
+			$window.open('mailto:'+email+'?subject=Consulta'
+				+'&body='+ encodeURIComponent(formattedBody), 
+				'_blank');
 		}
 		$scope.contactFacebook = function(facebook) {
 			$window.open(facebook, '_blank');
 		}
 		$scope.contactTwitter = function(twitter) {
-			$window.open(twitter, '_blank');
+			var user = twitter.split('https://twitter.com/')[1];
+			var formattedText = '@'+user + ' [Tu mensaje aquí] #contactales';
+			var url = "https://twitter.com/intent/tweet?related=journey_labs&text="+encodeURIComponent(formattedText)
+				+"&original_referer=http://localhost:3000/members/53bc0c0a52c2f50c2ba501c1"
+			$window.open(url, '_blank', 'width=500,height=500');
 		}
 		$scope.contactBlog = function(blog) {
 			$window.open(blog, '_blank');
