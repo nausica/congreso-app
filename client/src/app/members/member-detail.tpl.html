@@ -14,22 +14,22 @@
 				</p>
 				<div ng-show="{{member.social_profile!=undefined}}">
 					<div class="btn-group">
-						<button type="button" class="btn btn-default" ng-click="contactMail(member.social_profile.email, member.name)"
+						<button type="button" class="btn btn-default" ng-click="actions.contactMail(member.social_profile.email, member.name)"
 						ng-show="{{member.social_profile.email!=undefined}}">
 							<span class="icon-large icon-envelope"></span> 
 							Correo electrónico
 						</button>
-						<button type="button" class="btn btn-default" ng-click="contactTwitter(member.social_profile.twitter)"
+						<button type="button" class="btn btn-default" ng-click="actions.contactTwitter(member.social_profile.twitter)"
 						ng-show="{{member.social_profile.twitter!=undefined}}">
 							<i class="icon-large icon-twitter"></i>
 							Envía un Tweet
 						</button>
-						<button type="button" class="btn btn-default" ng-click="contactFacebook(member.social_profile.facebook)"
+						<button type="button" class="btn btn-default" ng-click="actions.contactFacebook(member.social_profile.facebook)"
 						ng-show="{{member.social_profile.facebook!=undefined}}">
 							<i class="icon-large icon-facebook"></i>
 							Comenta en mi Facebook
 						</button>
-						<button type="button" class="btn btn-default" ng-click="contactBlog(member.social_profile.blog)" ng-show="{{member.social_profile.blog!=undefined}}">
+						<button type="button" class="btn btn-default" ng-click="actions.contactBlog(member.social_profile.blog)" ng-show="{{member.social_profile.blog!=undefined}}">
 							<i class="icon-large icon-blogger"></i>
 							Comenta en mi blog
 						</button>
@@ -44,9 +44,10 @@
 				<tab heading="Votaciones">
 					<div class="">
 						<div class="pagination-row row">
-                			<pagination total-items="pager.totalItems" items-per-page="pager.itemsPerPage" ng-model="pager.currentPage" boundary-links="true" max-size="pager.maxSize"></pagination>
+                			<pagination total-items="pager.totalItems" items-per-page="pager.itemsPerPage" ng-model="pager.currentPage" max-size="pager.maxSize" rotate="false" class="pagination-sm"></pagination>
+
 						</div>
-						<div class="voting-row row" ng-repeat="voting in filteredVotings">
+						<div class="voting-row row" ng-repeat="voting in mergedVotings">
 							<div class="col-md-2">
 								<time class="icon" datetime="2014-09-20">
 									<em>{{voting.formattedYear}}</em>
@@ -58,7 +59,7 @@
 								<h4>{{voting.title}}</h4>
 								<p>{{voting.text}}</p>
 								<p>{{voting.session}}, {{voting.order}}</p>
-								<button type="button" class="btn btn-primary" ng-click="viewVoting(voting)">Detalles de la votación</button>
+								<button type="button" class="btn btn-primary" ng-click="actions.viewVoting(voting)">Detalles de la votación</button>
 							</div> 
 							<div class="col-md-3">
 								<!--<p>{{voting.session}}, {{voting.order}}</p>-->

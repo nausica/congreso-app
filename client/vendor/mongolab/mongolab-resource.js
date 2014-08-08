@@ -54,6 +54,12 @@ angular.module('mongolabResource', []).factory('mongolabResource', ['MONGOLAB_CO
 			return thenFactoryMethod(httpPromise, successcb, errorcb, true);
 		};
 
+		Resource.advancedQuery = function (queryJson, skip, limit, successcb, errorcb) {
+			var params = angular.isObject(queryJson) ? {q:JSON.stringify(queryJson), sk:skip, l: limit} : {};
+			var httpPromise = $http.get(url, {params:angular.extend({}, defaultParams, params)});
+			return thenFactoryMethod(httpPromise, successcb, errorcb, true);
+		};
+
 		Resource.getById = function (id, successcb, errorcb) {
 			var httpPromise = $http.get(url + '/' + id, {params:defaultParams});
 			return thenFactoryMethod(httpPromise, successcb, errorcb);
