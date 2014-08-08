@@ -2,17 +2,19 @@
 	<div class="jumbotron row my-jumbrotron">
 		<div class="col-md-6 col-md-offset-2">
 			<div class="text-center">
-				<h2>Pregunta a tus representantes en el congreso.</h2>
+				<h2>Pregunta a tus representantes en el Congreso.</h2>
 			</div>
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Escribe tu ciudad" ng-model="province">
+			<div class="">
+				<input type="text" placeholder="Escribe tu provincia aquí" ng-model="selected" typeahead="province.display_name for province in provinces | filter:$viewValue | limitTo:8" class="form-control" typeahead-on-select="selectProvince($item)">
+    			
+    			<!--
 				<span class="input-group-btn">
 					<a ui-sref="search({ province: province })" class="btn btn-default" type="button">Enviar</a>
 				</span>
+			-->
 			</div><!-- /input-group -->
 			<div class="text-center">
-				<h4>Aquí puedes ver la lista de representantes de <span class="provincia">{{display_province}}</span>.</h4>
-				<h4>Elige al miembro del Congreso que te gustaría contactar:</h4>
+				<h4>Aquí puedes ver la lista de representantes de <span class="provincia">{{display_province}}</span>. Elige al miembro del Congreso que te gustaría contactar:</h4>
 			</div>
 		</div>
 	</div>

@@ -8,22 +8,14 @@
 		'resources.members', 
 		'resources.votings', 
 		'resources.votes', 
+		'resources.provinces',
 		'ui.bootstrap', 
 		'votings',
-		'ui.router'])
+		'ui.router',
+		'ngResource'])
 
 	.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('search', {
-				url: '/members/search/:province',
-				templateUrl:'members/members-list.tpl.html',
-				controller:'MembersViewCtrl',
-				resolve:{
-					members:['Members', '$stateParams', function (Members, $stateParams) { 
-						return Members.forProvince($stateParams.province);
-					}]
-				}
-			})
 			.state('members', {
 				url: '/members',
 				templateUrl:'members/members-list.tpl.html',
@@ -31,6 +23,16 @@
 				resolve:{
 					members:['Members', function (Members) {
 						return Members.all();
+					}]
+				}
+			})
+			.state('search', {
+				url: '/members/search/:province',
+				templateUrl:'members/members-list.tpl.html',
+				controller:'MembersViewCtrl',
+				resolve:{
+					members:['Members', '$stateParams', function (Members, $stateParams) { 
+						return Members.forProvince($stateParams.province);
 					}]
 				}
 			})
@@ -66,15 +68,23 @@
 
 	}])
 
-	.controller('MembersViewCtrl', ['$scope', '$location', '$stateParams', 'members', function ($scope, $location, $stateParams, members) {
+	.controller('MembersViewCtrl', ['$scope', '$location', '$stateParams', '$state', 'members', 'ProvincesJsonService', function ($scope, $location, $stateParams, $state, members, ProvincesJsonService) {
 		$scope.members = members;
-		$scope.province = $stateParams.province;
-		$scope.display_province = ($scope.province ?   $scope.province : 'todas las provincias') + ' (' + $scope.members.length + ')';
+		$scope.display_province = ($stateParams.province ?   $stateParams.province : 'todas las provincias') + ' (' + $scope.members.length + ')';
 
+		ProvincesJsonService.get(function(data){
+			$scope.provinces = data.province_list;
+		});
+		
 		$scope.viewMember = function (member) {
 			$location.path('/members/'+member.$id());
 		};
-
+	
+		$scope.selectProvince = function(province) {
+			//$state.go('.search({ province: '+province.name+' })');
+			$location.path('/members/search/'+province.name);
+		}
+	  	
 	}])
 
 	.controller('MemberDetailCtrl', ['$scope', '$location', '$window', '$stateParams', 'member', 'votings', 'votes', function ($scope, $location, $window, $stateParams, member, votings, votes) {
@@ -147,7 +157,6 @@
 		};
 
   		$scope.$watch('pager.currentPage + pager.itemsPerPage', function() {
-  			console.log($scope.pager.currentPage)
     		var begin = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
         	end = begin + $scope.pager.itemsPerPage;
 

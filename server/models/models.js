@@ -1,6 +1,12 @@
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.ObjectId
 
+var provinceSchema = new mongoose.Schema({
+	zip: 'String',
+	name: 'String',
+	display_name: 'String'
+});
+
 var committeeSchema = new mongoose.Schema({
 	name: 'String',
 	role: 'String',
@@ -66,3 +72,4 @@ module.exports.Member = mongoose.model('Member', memberSchema);
 module.exports.Voting = mongoose.model('Voting', votingSchema);
 module.exports.Vote = mongoose.model('Vote', voteSchema);
 module.exports.Committee = mongoose.model('Committee', committeeSchema);
+module.exports.Province = mongoose.model('Province', committeeSchema);

@@ -94,7 +94,7 @@ module.exports = function (grunt) {
 				}
 			},
 			angular: {
-				src:['vendor/angular/angular.js', 'vendor/angular/angular-route.js', 'vendor/angular-ui/ui-router/angular-ui-router.js'],
+				src:['vendor/angular/angular.js', 'vendor/angular/angular-resource.js', 'vendor/angular-ui/ui-router/angular-ui-router.js'],
 				dest: '<%= distdir %>/angular.js'
 			},
 			mongo: {
@@ -140,26 +140,6 @@ module.exports = function (grunt) {
 				dest: '<%= distdir %>/jquery.js'
 			}
 		},
-		/*
-		recess: {
-			build: {
-				files: {
-					'<%= distdir %>/<%= pkg.name %>.css':
-					['<%= src.less %>'] },
-				options: {
-					compile: true
-				}
-			},
-			min: {
-				files: {
-					'<%= distdir %>/<%= pkg.name %>.css': ['<%= src.less %>']
-				},
-				options: {
-					compress: true
-				}
-			}
-		},
-		*/
 		less: {
 			build: {
 				files: {

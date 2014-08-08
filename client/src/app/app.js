@@ -6,6 +6,7 @@
 
 	angular.module('app', [
 		'ui.router',
+		'ngResource',
 		'members',
 		'votings',
 		'templates.app',
