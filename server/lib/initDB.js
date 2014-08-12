@@ -156,7 +156,6 @@ var initDB = {
 					console.log(url);
 
 					var parse_page = function(page, ph) {
-
 						page.evaluate(
 							function() {
 												
@@ -165,7 +164,8 @@ var initDB = {
 									picture_url,
 									committee_list = [],
 									personal_list = [],
-									social_profile = {};
+									social_profile = {},
+									inactive = false;
 														
 								$('.nombre_dip').each(function() {
 									nameArr.push($(this).text());
@@ -197,10 +197,12 @@ var initDB = {
 
 								// Personal stuff
 								$('.texto_dip li:not(".regact_dip")').each(function(){
-									personal_list.push(
-										$(this).text()
-											.replace(/\n|\r|\t/g, '').trim()
-									);
+									var text = $(this).text().replace(/\n|\r|\t/g, '').trim();
+									personal_list.push(text);
+									// inactive?
+									if (text.indexOf("Causó baja") !== -1) {
+										inactive = true;
+									}
 								});
 								
 								// Social stuff
@@ -256,7 +258,9 @@ var initDB = {
 								picture_url : picture_url,
 								committee_list: committee_list,
 								personal_list: personal_list,
-								social_profile: social_profile
+								social_profile: social_profile,
+								inactive: inactive,
+								url: document.URL
 								
 							};
 												
@@ -278,14 +282,12 @@ var initDB = {
 						//phantom.create(function(ph) {
 						ph.createPage(function(page) {
 							page.open(url, function(status) {
-							console.log("opened site? ", status);  
-
+								console.log("opened site? ", status);  
 								page.includeJs('http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js', function(err) {
 									//jQuery Loaded.
 									//Wait for a bit for AJAX content to load on the page. Here, we are waiting 5 seconds.
 									setTimeout(function() {
 										parse_page(page, ph);
-											
 									}, 5000);
 						 
 								});       
@@ -300,15 +302,13 @@ var initDB = {
 					var url_array = [];
 
 					// TODO Smart way to detect changes
-					for (var i=296; i<=MAX_ID; i++) {
+					for (var i=1; i<=MAX_ID; i++) {
 						url_array.push( url_pattern.replace('<IDHERE>', i) );
 						//url_array.push('http://www.congreso.es')
 					}
 
 					async.mapSeries(url_array, 
-
 						scrape,
-
 						function(err, results){
 							// results is now an array of stats for each file
 							ph.exit();

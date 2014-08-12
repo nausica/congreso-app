@@ -43,9 +43,9 @@
 							</a>
 						</div>
 					</tab>
-					<tab heading="En blanco ({{votes_distribution['Blank'].count}})">
+					<tab heading="Se abstienen ({{votes_distribution['Abstaining'].count}})">
 						<div class="list-group">
-							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Blank'].votes">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Abstaining'].votes">
 								<div class="col-xs-10 col-md-2">
 									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="140x140" style="width: 75px; height: 75px;">
 								</div>
@@ -55,9 +55,9 @@
 							</a>
 						</div>
 					</tab>
-					<tab heading="Se abstienen ({{votes_distribution['Abstaining'].count}})">
+					<tab heading="No Votan ({{votes_distribution['NoVote'].count}})">
 						<div class="list-group">
-							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['Abstaining'].votes">
+							<a ng-click="viewMember(vote)" class="list-group-item" ng-repeat="vote in votes_distribution['NoVote'].votes">
 								<div class="col-xs-10 col-md-2">
 									<img src="http://placehold.it/75x75" class="img-thumbnail" alt="140x140" style="width: 75px; height: 75px;">
 								</div>

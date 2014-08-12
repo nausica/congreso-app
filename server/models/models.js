@@ -19,7 +19,7 @@ var memberSchema = new mongoose.Schema({
 	url: 'String',
 	email: 'String',
 	location: 'String',
-	key: 'Number',
+	key: 'Number', //idDiputado???
 	group: 'String',
 	picture_url: 'String',
 	personal_list: ['String'],
@@ -47,13 +47,12 @@ var votingSchema = new mongoose.Schema({
     },
     title: 'String',
     text: 'String',
-    result: 'String', // Asentimiento : No or Sí, if yes there are no votes
+    result: 'String',
     attendees: 'Number',
     votes_for: 'Number',
     votes_against: 'Number',
     votes_abstaining: 'Number',
-    votes_blank: 'Number'
-    //,votes_list: [voteSchema]
+    votes_blank: 'Number' // They are actually the missing votes
 });
 
 // Subdocument schema for vote

@@ -24,7 +24,7 @@
 				count: 0,
 				votes: []
 			},
-			'Blank' : {
+			'NoVote' : {
 				count: 0,
 				votes: []
 			},
@@ -41,9 +41,9 @@
 			} else if (vote.vote === 'No') {
 				$scope.votes_distribution['No'].votes.push(vote);
 				$scope.votes_distribution['No'].count++;
-			} else if (vote.vote === 'En blanco') {
-				$scope.votes_distribution['Blank'].votes.push(vote);
-				$scope.votes_distribution['Blank'].count++;
+			} else if (vote.vote === 'No vota') {
+				$scope.votes_distribution['NoVote'].votes.push(vote);
+				$scope.votes_distribution['NoVote'].count++;
 			} else {
 				$scope.votes_distribution['Abstaining'].votes.push(vote);
 				$scope.votes_distribution['Abstaining'].count++;
