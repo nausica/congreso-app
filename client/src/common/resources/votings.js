@@ -19,8 +19,18 @@ angular.module('resources.votings')
 	Votings.pageQuery = function(skip, limit, successcb, errorcb) {
 		return Votings.advancedQuery(
 			{},
+			//{"session": 31, "order": 1},
 			skip, //sk
 			limit, //l
+			successcb, errorcb);
+	};
+
+	Votings.getLastSession = function(skip, limit, successcb, errorcb) {
+		return Votings.advancedQuery(
+			{},
+			{"session": -1, "order": 1},
+			0, //sk
+			1, //l
 			successcb, errorcb);
 	};
 	

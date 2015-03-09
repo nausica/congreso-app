@@ -32,8 +32,8 @@
 				count: 0,
 				votes: []
 			}
+		};
 
-		}
 		angular.forEach(votes, function (vote) {
 			if (vote.vote === 'Sí') {
 				$scope.votes_distribution['Yes'].votes.push(vote);
@@ -53,5 +53,5 @@
 		$scope.viewMember = function (vote) {
 			$location.path('/members/'+vote.member_id.$oid);
 		};
-	}])
+	}]);
 }());

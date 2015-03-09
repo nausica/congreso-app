@@ -12,7 +12,6 @@ module.exports = function (grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['jshint','build','karma:unit']);
-	//grunt.registerTask('build', ['clean','html2js','concat','recess:build','copy:assets']);
 	grunt.registerTask('build', ['clean','html2js','concat', 'less', 'copy:assets']);
 	grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'recess:min','copy:assets']);
 	grunt.registerTask('test-watch', ['karma:watch']);
@@ -161,7 +160,7 @@ module.exports = function (grunt) {
 			}
 		},
 		jshint:{
-			files:['gruntFile.js', '<%= src.js %>', '<%= src.jsTpl %>', '<%= src.specs %>', '<%= src.scenarios %>'],
+			files:['gruntFile.js', '<%= src.js %>', '<%= src.specs %>', '<%= src.scenarios %>'],
 			options:{
 				curly:true,
 				eqeqeq:true,

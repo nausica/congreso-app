@@ -22,8 +22,8 @@
 		.config(['$locationProvider', '$stateProvider', '$urlRouterProvider', function ($locationProvider, $stateProvider, $urlRouterProvider) {
 			$locationProvider.html5Mode(true);
 			// For any unmatched url, send to /members
-    		$urlRouterProvider.otherwise("/members");
-    		$stateProvider
+			$urlRouterProvider.otherwise("/members");
+			$stateProvider
 				.state('about', {
 					url: '/about',
 					templateUrl:'about.tpl.html'
@@ -35,8 +35,8 @@
 				.state('contacta', {
 					url: '/contacta',
 					templateUrl:'contacta.tpl.html'
-				})
-	}])
+				});
+	}]);
 
 	angular.module('app')
 		.controller('AppCtrl', ['$scope', function($scope) {
@@ -62,13 +62,12 @@
 						message: $scope.message
 					};
 					$http({
-					    method: 'POST',
-					    url: '/send',
-					    data: $.param(data),
-					    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-					})
+						method: 'POST',
+						url: '/send',
+						data: $.param(data),
+						headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+					});
 				};
-		
 			}
 		]);
 

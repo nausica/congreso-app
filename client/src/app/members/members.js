@@ -48,8 +48,16 @@
 						return Votings.pageQuery(0, 5);
 					}],
 					votes: function (Votes, $stateParams, votings, member) {
+						return null;
+					}
+					/*
+					votings: ['Votings', function (Votings) {
+						return Votings.pageQuery(0, 5);
+					}],
+					votes: function (Votes, $stateParams, votings, member) {
 						return Votes.findByMemberIdAndVotings($stateParams.memberId, votings);
 					}
+					*/
 				}
 			})
 			.state('voting', {
@@ -83,23 +91,23 @@
 		$scope.selectProvince = function(province) {
 			//$state.go('.search({ province: '+province.name+' })');
 			$location.path('/members/search/'+province.name);
-		}
-	  	
+		};
+		
 	}])
 
 	.controller('MemberDetailCtrl', ['$scope', '$location', '$window', '$stateParams', 'member', 'votings', 'votes', 'Votings', 'Votes', function ($scope, $location, $window, $stateParams, member, votings, votes, Votings, Votes) {
 		$scope.member = member;
 		//////////////////////////////
-        // Actions       			//
-        //////////////////////////////
+		//	Actions
+		//////////////////////////////
 		$scope.actions = {
 			viewVoting : function (voting) {
 				$location.path('/votings/'+voting.$id());
 			},
 			contactMail : function(email, name) {
 				var formattedBody = "Querido\/a "+ name + ",\n[Tu mensaje aquí]\n\nSinceramente,\n[Tu nombre aquí]\n#contactales";
-				$window.open('mailto:'+email+'?subject=Consulta'
-					+'&body='+ encodeURIComponent(formattedBody), 
+				$window.open('mailto:'+email+'?subject=Consulta' +
+					'&body='+ encodeURIComponent(formattedBody), 
 					'_blank');
 			},
 			contactFacebook : function(facebook) {
@@ -108,21 +116,21 @@
 			contactTwitter : function(twitter) {
 				var user = twitter.split('https://twitter.com/')[1];
 				var formattedText = '@'+user + ' [Tu mensaje aquí] #contactales';
-				var url = "https://twitter.com/intent/tweet?related=journey_labs&text="+encodeURIComponent(formattedText)
-					+"&original_referer=http://localhost:3000/members/53bc0c0a52c2f50c2ba501c1";
+				var url = 'https://twitter.com/intent/tweet?related=journey_labs&text='+encodeURIComponent(formattedText) +
+					'&original_referer=http://localhost:3000/members/53bc0c0a52c2f50c2ba501c1';
 				$window.open(url, '_blank', 'width=500,height=500');
 			},
 			contactBlog : function(blog) {
 				$window.open(blog, '_blank');
 			}
-		}
+		};
 
 		//////////////////////////////
-        // Data Parsing 			//
-        //////////////////////////////
-        $scope.votings = votings;
-        $scope.votes = votes;
-        var votes_map = {};	
+		// Data Parsing
+		//////////////////////////////
+		$scope.votings = votings;
+		$scope.votes = votes;
+		var votes_map = {};	
 		var resultClass = function(voting) {
 			// Asentimiento ?
 			if (voting.result === 'Sí') {
@@ -135,7 +143,7 @@
 			}
 		};
 		var mergeVotings = function(votes, votings) {
-			var mergedVotings = []
+			var mergedVotings = [];
 			angular.forEach(votes, function (vote) {
 				if (!votes_map[vote.voting_id.$oid]) { // Is this the only way to reach the id?
 					votes_map[vote.voting_id.$oid] = vote.vote;
@@ -155,10 +163,10 @@
 				mergedVotings.push(v);
 			});
 			return mergedVotings;
-		}
+		};
 		//////////////////////////////
-        // Pagination    			//
-        //////////////////////////////
+		// Pagination
+		//////////////////////////////
 		$scope.pager = {
 			//totalItems: $scope.votings.length,
 			totalItems: 2000, // huge number
@@ -167,18 +175,18 @@
 			maxSize: 5
 		};
 		/*
-  		$scope.$watch('pager.currentPage + pager.itemsPerPage', function() {
-    		var begin = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
-        	end = begin + $scope.pager.itemsPerPage;
+		$scope.$watch('pager.currentPage + pager.itemsPerPage', function() {
+			var begin = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
+			end = begin + $scope.pager.itemsPerPage;
 
-      		$scope.filteredVotings = $scope.votings.slice(begin, end);
-    	});
+			$scope.filteredVotings = $scope.votings.slice(begin, end);
+		});
 		*/
-    	$scope.$watch('pager', function (newVal, oldVal) {
-    		var skip = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
-    		limit = $scope.pager.maxSize;
+		$scope.$watch('pager', function (newVal, oldVal) {
+			var skip = (($scope.pager.currentPage - 1) * $scope.pager.itemsPerPage),
+			limit = $scope.pager.maxSize;
 			if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
-            	$scope.getPagedVotingsAsync(skip, limit);
+				$scope.getPagedVotingsAsync(skip, limit);
 			} else {
 				$scope.mergedVotings = mergeVotings($scope.votes, $scope.votings);
 			}
@@ -191,7 +199,7 @@
 						$scope.votes = data;
 						$scope.mergedVotings = mergeVotings($scope.votes, $scope.votings);
 					});
-				})
-        };
-	}])
+				});
+		};
+	}]);
 }());

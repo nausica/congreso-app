@@ -42,8 +42,9 @@ var SESSIONS = [
 	151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 
 	171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 
 	186, 187, 188, 189, 190,
-	*/
 	191, 192, 193, 195, 196
+	*/
+	231, 233, 234, 236
 	
 ];
 
@@ -135,7 +136,7 @@ var importFile = function(file, callback) {
 							var vote = new Vote();
 							vote.seat = v['Asiento'][0];
 							vote.name = v['Diputado'][0];
-							vote.group = v['Grupo'][0];
+							vote.group = v['Grupo'] ? v['Grupo'][0] : undefined;
 							vote.vote = v['Voto'][0];
 							vote.voting_id = voting_result.id;
 							vote.member_id = members_map[vote.name];
@@ -225,7 +226,6 @@ var loadDB = {
 					m.name = m.name ? m.name.replace(/\s/g,' ') : undefined;
 					members_map[m.name] = m._id.toString();
 				});
-				console.log(members_map)
 				
 				var arr = getDirs('./files', function(err, dirs){
 				async.mapSeries(dirs,

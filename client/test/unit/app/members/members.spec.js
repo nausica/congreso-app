@@ -14,7 +14,7 @@ describe('member controllers', function() {
 	}
 
 	function createMockMembersList(id) {
-		return [ createMockMember('53b45f75e08976c206f3433c') ];
+		return [ createMockMember('54bd4a065a1af74e4227b560') ];
 	}
 
 	/*
@@ -38,7 +38,7 @@ describe('member controllers', function() {
 		});
 	});
 
-	describe('viewMember(53b45f75e08976c206f3433c)', function() {
+	describe('viewMember(54bd4a065a1af74e4227b560)', function() {
 		var $scope = {},
 			members = createMockMembersList();
 
@@ -50,7 +50,7 @@ describe('member controllers', function() {
 
 			$scope.viewMember(members[0]);
 
-			expect($location.path).toHaveBeenCalledWith('/members/53b45f75e08976c206f3433c');
+			expect($location.path).toHaveBeenCalledWith('/members/54bd4a065a1af74e4227b560');
 
 		}));
 	});
