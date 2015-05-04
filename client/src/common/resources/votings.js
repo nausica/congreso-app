@@ -20,6 +20,7 @@ angular.module('resources.votings')
 		return Votings.advancedQuery(
 			{},
 			//{"session": 31, "order": 1},
+			{"date": -1},
 			skip, //sk
 			limit, //l
 			successcb, errorcb);

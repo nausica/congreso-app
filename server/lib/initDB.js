@@ -10,13 +10,13 @@ var _ = require('underscore');
 var models = require('../models/models.js');
 var Member = models.Member;
 
+
 var initDB = {
 	adminUser: { email: 'admin@abc.com', password: 'changeme', admin: true, firstName: 'Admin', lastName: 'User' },
 
 	initialize: function(cfg) {
 		initDB.apiKey = cfg.mongo.apiKey;
 		initDB.baseUrl = cfg.mongo.dbUrl + '/databases/' + cfg.security.dbName + '/collections/';
-		initDB.usersCollection = cfg.security.usersCollection;
 		initDB.membersCollection = cfg.security.membersCollection;
 		initDB.user = cfg.security.user;
 		initDB.password = cfg.security.password;
@@ -34,55 +34,10 @@ var initDB = {
 			done(err, data);
 		});
 	},
-  
-	createDocument: function(collection, doc, done) {
-		var url = initDB.baseUrl + collection + '/';
-		console.log("rest.post - " + url);
-		var request = rest.post(url, { qs: { apiKey:initDB.apiKey }, json: doc }, function(err, response, data) {
-			if ( !err ) {
-				console.log('Document created', data);
-			}
-		done(err, data);
-		});
-	},
-  
-	deleteDocument: function(collection, docId, done) {
-		var url = initDB.baseUrl + collection + '/' + docId;
-		console.log("rest.del - " + url);
-		var request = rest.del(url, { qs: { apiKey:initDB.apiKey }, json: {} }, function(err, response, data) {
-			if ( !err ) {
-				console.log('Document deleted', data);
-			}
-			done(err, data);
-		});
-	},
-  
-	addAdminUser: function(done) {
-		console.log('*** Admin user properties:', initDB.adminUser);
-		console.log('Checking that admin user does not exist...');
-		initDB.checkDocument(initDB.usersCollection, initDB.adminUser, function(err, data) {
-			if ( !err && data.length === 0 ) {
-				console.log('Creating new admin user...', err, data);
-				initDB.createDocument(initDB.usersCollection, initDB.adminUser, function(err, data) {
-					console.log('Created new admin user...');
-					console.log(err);
-					console.log(data);
-					done(err, data);
-				});
-			} else {
-				if (data.message) {
-					console.log('Error: ' + data.message);
-				} else {
-					console.log('User already created.');
-				}
-				done(err, data);
-			}
-		});
-	},
 
 	checkMembersCollection: function(done) {
 		console.log('Checking that members collection is empty...');
-		/*
+		
 		initDB.checkDocument(initDB.membersCollection, {}, function(err, data) {
 			if ( !err && data.length === 0 ) {
 				console.log('Uploading members data...');
@@ -98,9 +53,6 @@ var initDB = {
 				done(err, data);
 			}
 		});
-*/
-		initDB.loadMembersData(done);
-
 	},
 
 	loadMembersData: function(done) {
@@ -265,17 +217,21 @@ var initDB = {
 							};
 												
 							}, function(result) {
-
-
 								var member = new Member(result);
-						
-								member.save(function(err) {
-									if(err) {
-										callback(err);
-									} else {
-										callback(null, result);
-									}
-								});
+								// Add member only if result is not empty
+								if (member.name && member.location && member.group) {
+									member.save(function(err) {
+										if(err) {
+											callback(err);
+										} else {
+											callback(null, result);
+										}
+									});
+								} else {
+									console.log('Error in '+ result.url);
+									callback(null, result)
+								}
+							
 							});
 					};
 
@@ -296,8 +252,8 @@ var initDB = {
 						//});
 					};
 
-
-					var MAX_ID = 397;
+					// There are 350 members in 
+					var MAX_ID = 430;
 					var url_pattern = 'http://www.congreso.es/portal/page/portal/Congreso/Congreso/Diputados/BusqForm?_piref73_1333155_73_1333154_1333154.next_page=/wc/fichaDiputado?idDiputado=<IDHERE>&idLegislatura=10';
 					var url_array = [];
 

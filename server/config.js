@@ -9,6 +9,7 @@ module.exports = {
 			dbName: 'congreso',                                 	// The name of database
 			usersCollection: 'users',                            	// The name of the collection contains user information
 			membersCollection: 'members',                           // The name of the collection contains congress members information
+			votingsCollection: 'votings',
 			user: 'congreso-app',
 			password: 'Qabasabslc'
 		},

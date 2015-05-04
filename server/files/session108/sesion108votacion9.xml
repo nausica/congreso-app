@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>108</Sesion>
+        <NumeroVotacion>9</NumeroVotacion>
+        <Fecha>23/5/2013</Fecha>
+        <Titulo>Dictámenes de la Comisión de Asuntos Exteriores sobre Convenios internacionales.</Titulo>
+        <TextoExpediente>Convenio de Seguridad Social entre el Reino de España y la República de Cabo Verde, hecho en Praia el 23 de noviembre de 2012.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

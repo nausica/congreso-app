@@ -54,11 +54,11 @@ angular.module('mongolabResource', []).factory('mongolabResource', ['MONGOLAB_CO
 			return thenFactoryMethod(httpPromise, successcb, errorcb, true);
 		};
 
-		Resource.advancedQuery = function (queryJson, skip, limit, successcb, errorcb) {
+		Resource.advancedQuery = function (queryJson, sortJson, skip, limit, successcb, errorcb) {
 			var params = angular.isObject(queryJson) ? 
 			{ 
 				q: JSON.stringify(queryJson), 
-				//s: JSON.stringify(sortJson),
+				s: JSON.stringify(sortJson),
 				sk: skip, 
 				l: limit
 			} 

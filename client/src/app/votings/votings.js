@@ -10,6 +10,8 @@
 		'ui.bootstrap'])
 
 	.controller('VotingDetailCtrl', ['$scope', '$location', 'voting', 'votes', function ($scope, $location, voting, votes) {
+
+		
 		$scope.voting = voting;
 		$scope.voting.formattedDay = moment(voting.date.$date).format('D'); // GRRRRRRRR
 		$scope.voting.formattedYear = moment(voting.date.$date).format('YYYY');

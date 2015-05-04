@@ -27,10 +27,18 @@ It is a complete project with a build system focused on AngularJS apps and tight
 * [Travis-CI](https://travis-ci.org/) integration
 
 ## Installation
-
+```
+cd client
+npm install
+grunt
+node ../server/server.js
+```
 
 ## Data collection
 libiconv
 phantomjs
 
-
+## Init database
+```
+node initDB.js
+```

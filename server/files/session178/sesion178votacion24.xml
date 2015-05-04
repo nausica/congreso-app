@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>178</Sesion>
+        <NumeroVotacion>24</NumeroVotacion>
+        <Fecha>20/3/2014</Fecha>
+        <Titulo>Acuerdo de tramitación directa y en lectura única de iniciativas legislativas</Titulo>
+        <TextoExpediente>Acuerdo de tramitación directa y en lectura única del Proyecto de Ley por la que se modifica la Ley 12/2002, de 23 de mayo, por la que se aprueba el Concierto Económico con la Comunidad Autónoma del País Vasco.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

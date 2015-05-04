@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>252</Sesion>
+        <NumeroVotacion>23</NumeroVotacion>
+        <Fecha>26/3/2015</Fecha>
+        <Titulo>Propuestas de creación de Subcomisiones.</Titulo>
+        <TextoExpediente>Propuesta de la Comisión de Defensa de creación de una Subcomisión para el estudio del modelo de la Reserva Militar Voluntaria.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

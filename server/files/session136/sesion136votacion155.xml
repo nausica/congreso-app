@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>136</Sesion>
+        <NumeroVotacion>155</NumeroVotacion>
+        <Fecha>10/10/2013</Fecha>
+        <Titulo>Propuestas de creación de Subcomisiones.</Titulo>
+        <TextoExpediente>Solicitud de creación de una Subcomisión, en el seno de la Comisión de Fomento, de estudio y análisis del sistema ferroviario español.</TextoExpediente>
+        <TituloSubGrupo/>
+        <TextoSubGrupo/>
+    </Informacion>
+    <Totales>
+        <Asentimiento>Sí</Asentimiento>
+    </Totales>
+    <Votaciones/>
+</Resultado>

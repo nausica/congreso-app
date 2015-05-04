@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<Resultado>
+    <Informacion>
+        <Sesion>123</Sesion>
+        <NumeroVotacion>18</NumeroVotacion>
+        <Fecha>17/7/2013</Fecha>
+        <Titulo>Enmiendas del Senado.</Titulo>
+        <TextoExpediente>Proyecto de Ley de medidas para mejorar el funcionamiento de la cadena alimentaria.</TextoExpediente>
+        <TituloSubGrupo>Votación separada de las enmiendas</TituloSubGrupo>
+        <TextoSubGrupo>Enmiendas a la Disposición Adicional Segunda y a la Disposición Adicional Cuarta.</TextoSubGrupo>
+    </Informacion>
+    <Totales>
+        <Asentimiento>No</Asentimiento>
+        <Presentes>305</Presentes>
+        <AFavor>283</AFavor>
+        <EnContra>15</EnContra>
+        <Abstenciones>7</Abstenciones>
+        <NoVotan>45</NoVotan>
+    </Totales>
+    <Votaciones/>
+</Resultado>
