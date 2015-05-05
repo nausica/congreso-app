@@ -7,10 +7,10 @@ initDB.initialize(config);
 
 initDB.checkMembersCollection(function() {
 	console.log('done with Members');
-	loadDB.downloadLatestVotations( function(err) {
+	//loadDB.downloadLatestVotations( function(err) {
 		loadDB.initialize(config);
 		loadDB.importLatestVotations();
-	});
+	//});
 
 });
 

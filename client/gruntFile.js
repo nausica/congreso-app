@@ -12,8 +12,8 @@ module.exports = function (grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['jshint','build','karma:unit']);
-	grunt.registerTask('build', ['clean','html2js','concat', 'less', 'copy:assets']);
-	grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'less','copy:assets']);
+	grunt.registerTask('build', ['clean','html2js','concat', 'less', 'copy:assets', 'copy:fonts']);
+	grunt.registerTask('release', ['clean','html2js','uglify','jshint','karma:unit','concat:index', 'less','copy:assets', 'copy:fonts']);
 	grunt.registerTask('test-watch', ['karma:watch']);
 
 	// Print a timestamp (useful for when watching)
@@ -52,7 +52,21 @@ module.exports = function (grunt) {
 		clean: ['<%= distdir %>/*'],
 		copy: {
 			assets: {
-				files: [{ dest: '<%= distdir %>', src : '**', expand: true, cwd: 'src/assets/' }]
+				files: [{ 
+					dest: '<%= distdir %>', 
+					src : '**', 
+					expand: true, 
+					cwd: 'src/assets/' 
+				}]
+			},
+			fonts: {
+				files: [{
+					cwd: 'vendor/font-awesome',
+					src: ['fonts/*.*'],
+					dot: true,
+					expand: true,
+					dest: '<%= distdir %>'
+				}]
 			}
 		},
 		karma: {

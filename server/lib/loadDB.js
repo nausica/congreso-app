@@ -132,7 +132,7 @@ var importFile = function(file, callback) {
 							vote.name = v['Diputado'][0];
 							vote.group = v['Grupo'] ? v['Grupo'][0] : undefined;
 							vote.vote = v['Voto'][0];
-							vote.voting_id = voting_result.id; // ._id
+							vote.voting_id = voting_result.id;
 							vote.member_id = members_map[vote.name];
 							vote.save(function(err) {
 								callback(err);
@@ -142,8 +142,11 @@ var importFile = function(file, callback) {
 							votes,
 							importVote,
 							function(err, results) {
+								if (err) {
+									console.log(err);
+								}
 								console.log('Votes imported')
-								callback(null);
+								callback(err);
 						});
 					} else {
 						callback(null);
@@ -167,7 +170,7 @@ var importDir = function(rootDir, callback) {
 
 			function(err, results) {
 				console.log('Files imported')
-				callback(null);
+				callback(err, null);
 			});
 
 	});
