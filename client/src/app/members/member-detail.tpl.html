@@ -67,10 +67,16 @@
 									<p>{{member.name}}: <strong>{{voting.vote}}</strong></p>
 								</div>
 								<div class="voting-box {{voting.resultClass}}">
+									<i class="fa fa-thumbs-up"></i>{{voting.votes_for}}
+									<i class="fa fa-thumbs-down"></i>{{voting.votes_against}}
+									<i class="fa fa-meh-o"></i>{{voting.votes_abstaining}}
+									<i class="fa fa-times"></i>{{voting.votes_blank}}
+										<!--
 									<span class="voting-icon voting-icon-for">{{voting.votes_for}}</span>
 									<span class="voting-icon voting-icon-against">{{voting.votes_against}}</span>
 									<span class="voting-icon voting-icon-blank">{{voting.votes_blank}}</span>
 									<span class="voting-icon voting-icon-abstaining">{{voting.votes_abstaining}}</span>
+								-->
 									<span class="clearfix"></span>
 								</div>
 							</div>
